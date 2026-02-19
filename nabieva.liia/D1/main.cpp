@@ -43,11 +43,19 @@ int main()
       return 1;
     }
     if (std::cin.eof()) {
+      nabieva::printPairs(pairs, countPair);
+      delete[] pairs;
       break;
     }
-    pairs = nabieva::addNewPair(pairs, countPair, num, symb);
-    countPair++;
+    try {
+      pairs = nabieva::addNewPair(pairs, countPair, num, symb);
+      countPair++;
+    }
+    catch (const std::bad_alloc&) {
+      nabieva::printPairs(pairs, countPair);
+      delete[] pairs;
+      return 2;
+    }
   }
-  nabieva::printPairs(pairs, countPair);
   return 0;
 }
