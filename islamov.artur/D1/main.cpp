@@ -36,8 +36,6 @@ int main()
       input_error = true;
       break;
     }
-    if (count == 0)
-      continue;
     if (size > std::numeric_limits<std::size_t>::max() - count)
     {
       std::cout << std::endl;
