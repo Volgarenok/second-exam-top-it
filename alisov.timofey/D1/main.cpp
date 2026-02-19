@@ -55,5 +55,15 @@ int main()
         return 2;
       }
     }
+    for (size_t i = 0; i < k; ++i)
+    {
+      ans[len++] = ch;
+    }
   }
+  for (std::size_t i = len; i > 0; --i)
+  {
+    std::cout << ans[i - 1];
+  }
+
+  delete[] ans;
 }
