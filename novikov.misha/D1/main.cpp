@@ -42,7 +42,7 @@ void novikov::destroy(char ** seq)
 
 void novikov::printReversed(const char * seq, size_t size)
 {
-  for (size_t i = 0; i = size; i > 0; --i) {
+  for (size_t i = size; i > 0; --i) {
     std::cout << seq[i - 1];
   }
   std::cout << "\n";
