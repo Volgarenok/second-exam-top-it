@@ -21,7 +21,7 @@ void extend(char *&seq, char sym, size_t amount, size_t &s)
 int main()
 {
   char sm;
-  size_t s = 0, nm = 0, f = 0;
+  size_t s = 0, nm = 0;
   char *seq = new char[s];
   while (std::cin >> nm >> sm)
   {
