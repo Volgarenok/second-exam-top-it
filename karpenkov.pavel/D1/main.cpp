@@ -2,7 +2,7 @@
 
 namespace karpenkov{
   char * expand (char * arr, size_t len, size_t newLen){
-    char * str = new char[len + newLen];
+    char * str = new char[newLen];
     for (size_t i = 0; i < len; i++){
       str[i] = arr[i];
     }
@@ -39,23 +39,28 @@ int main()
     if (!(std::cin >> letter)){
       std::cerr << "input error" << '\n';
       delete [] r;
+      std::cout << "";
       return 1;
     }
     if (size + number >= cap){
+      size_t newCap = cap + number + 10;
       try{
-        r = karpenkov::expand(r, size, number);
-        cap += number;
-        r = karpenkov::addNewLetters(r, size, number, letter);
+        r = karpenkov::expand(r, size, newCap);
+        cap = newCap;
       }
       catch(std::bad_alloc & e){
         std::cerr << "bad_alloc" << e.what() << '\n';
-         delete [] r;
+        delete [] r;
+        std::cout << "";
         return 2;
       }
     }
-    else{
-      r = karpenkov::addNewLetters(r, size, number, letter);
-    }
+    r = karpenkov::addNewLetters(r, size, number, letter);
+  }
+  if (size == 0){
+    delete [] r;
+    std::cout << std::endl;
+    return 0;
   }
   if (size < cap){
     try{
@@ -64,7 +69,10 @@ int main()
     catch(std::bad_alloc & e){
       std::cerr << "bad_alloc " << e.what() << '\n';
       delete [] r;
+      std::cout << std::endl;
+      return 2;
     }
   }
   karpenkov::reverseLetters(r, size);
+  return 0;
 }
