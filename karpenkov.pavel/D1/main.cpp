@@ -6,7 +6,6 @@ namespace karpenkov{
     for (size_t i = 0; i < len; i++){
       str[i] = arr[i];
     }
-    delete[] arr;
     return str;
   }
   char * addNewLetters(char * arr, size_t& size, size_t count, char letter){
@@ -25,7 +24,6 @@ namespace karpenkov{
     for (size_t i = 0; i < size; i++){
       str[i] = arr[i];
     }
-    delete[] arr;
     return str;
   }
 }
