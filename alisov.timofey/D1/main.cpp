@@ -20,6 +20,16 @@ int main()
   size_t len = 0, cap = 1;
   size_t k;
   char ch;
+  try
+  {
+    ans = new char[16];
+    cap = 16;
+  }
+  catch (const std::bad_alloc &)
+  {
+    std::cerr << "Memory allocation error\n";
+    return 2;
+  }
 
   while (true)
   {
