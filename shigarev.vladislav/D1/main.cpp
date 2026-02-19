@@ -10,11 +10,6 @@ namespace shigarev
     char ch_;
   };
 
-  bool readPair(unsigned int & count, char & ch)
-  {
-    return static_cast< bool >(std::cin >> count >> ch);
-  }
-
   class PairArray
   {
   public:
@@ -27,11 +22,6 @@ namespace shigarev
     ~PairArray()
     {
       delete [] data_;
-    }
-
-    const pair_t & operator [](std::size_t i) const
-    {
-      return data_[i];
     }
 
     std::size_t getSize() const
@@ -63,6 +53,11 @@ namespace shigarev
       return total;
     }
 
+    const pair_t & operator [](std::size_t i) const
+    {
+      return data_[i];
+    }
+
   private:
     pair_t * data_;
     std::size_t size_;
@@ -91,11 +86,6 @@ namespace shigarev
       delete [] data_;
     }
 
-    std::size_t getLength() const
-    {
-      return length_;
-    }
-
     void printReverse() const
     {
       for (std::size_t i = length_; i > 0; --i)
@@ -116,39 +106,48 @@ int main()
   shigarev::PairArray arr;
   unsigned int count = 0;
   char ch = '\0';
+  bool readError = false;
 
-  while (std::cin.peek() != EOF)
+  while (std::cin >> count)
   {
-    if (!shigarev::readPair(count, ch))
+    if (!(std::cin >> ch))
     {
-      if (!std::cin.eof())
-      {
-        std::cerr << "Error: failed to read a pair\n";
-        return 1;
-      }
+      readError = true;
       break;
     }
-
     try
     {
       arr.append(count, ch);
     }
     catch (const std::bad_alloc &)
     {
+      std::cout << '\n';
       std::cerr << "Error: memory allocation failed\n";
       return 2;
     }
   }
 
+  if (!readError && !std::cin.eof())
+  {
+    readError = true;
+  }
+
   try
   {
-    const shigarev::CharSequence seq(arr);
+    shigarev::CharSequence seq(arr);
     seq.printReverse();
   }
   catch (const std::bad_alloc &)
   {
+    std::cout << '\n';
     std::cerr << "Error: memory allocation failed\n";
     return 2;
+  }
+
+  if (readError)
+  {
+    std::cerr << "Error: failed to read a pair\n";
+    return 1;
   }
 
   return 0;
