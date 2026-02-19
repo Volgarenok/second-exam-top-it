@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     std::cerr << "Invalid arguments\n";
     return 1;
   }
-  if (argc == 2 && std::strcmp(argv[1], "reverse")) {
+  if (argc == 2 && (std::strcmp(argv[1], "reverse") != 0)) {
     std::cerr << "Invalid arguments\n";
     return 1;
   }
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
       }
     }
   }
-  if (argc == 2 && std::strcmp(argv[1], "reverse")) {
+  if (argc == 2 && (std::strcmp(argv[1], "reverse") == 0)) {
     nabieva::reversePrintPairs(pairs, countPair);
   }
   else {
