@@ -14,19 +14,33 @@ int main()
   }
   catch (const std::bad_alloc&)
   {
+    std::cout << std::endl;
     std::cerr << "Memory allocation error\n";
     return 2;
   }
   unsigned int count = 0;
   char ch = '\0';
-  while (std::cin >> count >> ch)
+  bool input_error = false;
+
+  while (true)
   {
-    if (count == 0)
+    if (!(std::cin >> count))
     {
-      continue;
+      if (std::cin.eof())
+        break;
+      input_error = true;
+      break;
     }
-    if (size > std::numeric_limits< std::size_t >::max() - count)
+    if (!(std::cin >> ch))
     {
+      input_error = true;
+      break;
+    }
+    if (count == 0)
+      continue;
+    if (size > std::numeric_limits<std::size_t>::max() - count)
+    {
+      std::cout << std::endl;
       delete[] buffer;
       std::cerr << "Error: too many characters requested\n";
       return 2;
@@ -35,9 +49,7 @@ int main()
     {
       std::size_t new_cap = cap * 2;
       if (new_cap < size + count)
-      {
         new_cap = size + count;
-      }
       char* new_buffer = nullptr;
       try
       {
@@ -45,42 +57,34 @@ int main()
       }
       catch (const std::bad_alloc&)
       {
+        std::cout << std::endl;
         delete[] buffer;
         std::cerr << "Memory allocation error\n";
         return 2;
       }
       for (std::size_t i = 0; i < size; ++i)
-      {
         new_buffer[i] = buffer[i];
-      }
       delete[] buffer;
       buffer = new_buffer;
       cap = new_cap;
     }
     for (unsigned int i = 0; i < count; ++i)
-    {
       buffer[size + i] = ch;
-    }
     size += count;
   }
-  if (!std::cin.eof())
-  {
-    delete[] buffer;
-    std::cerr << "Input error\n";
-    return 1;
-  }
   if (size == 0)
-  {
     std::cout << std::endl;
-  }
   else
   {
     for (std::size_t i = size; i > 0; --i)
-    {
       std::cout << buffer[i - 1];
-    }
     std::cout << std::endl;
   }
   delete[] buffer;
+  if (input_error)
+  {
+    std::cerr << "Input error\n";
+    return 1;
+  }
   return 0;
 }
