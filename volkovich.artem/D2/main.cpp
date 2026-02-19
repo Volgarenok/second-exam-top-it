@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     {
       symbs = new char[1];
       symbs_size = new size_t[1];
-      symbs[0] = symb
+      symbs[0] = symb;
     }
     catch (...)
     {
