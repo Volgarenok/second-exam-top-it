@@ -1,4 +1,5 @@
 #include "sequence.hpp"
+
 #include <cstdlib>
 #include <cstring>
 
@@ -16,4 +17,21 @@ void destroySequence(sequence_t &seq)
   seq.size = 0;
   seq.capacity = 0;
 }
+
+bool appendChar(sequence_t &seq, char ch)
+{
+  if (seq.size == seq.capacity) {
+    const std::size_t newCapacity = (seq.capacity == 0) ? 8 : seq.capacity * 2;
+    char *newData = static_cast< char * >(std::realloc(seq.data, newCapacity));
+    if (newData == nullptr) {
+      return false;
+    }
+    seq.data = newData;
+    seq.capacity = newCapacity;
+  }
+  seq.data[seq.size] = ch;
+  seq.size += 1;
+  return true;
+}
+
 }
