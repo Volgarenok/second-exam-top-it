@@ -24,19 +24,28 @@ void initTable(CharTable & table)
   table.orderSize = 0;
 }
 
+bool isDelimiter(char ch)
+{
+  return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r';
+}
+
+void recordChar(CharTable & table, char ch)
+{
+  const int idx = static_cast<unsigned char>(ch);
+  if (table.counts[idx] == 0) {
+    table.order[table.orderSize] = ch;
+    ++table.orderSize;
+  }
+  ++table.counts[idx];
+}
+
 void readInput(CharTable & table)
 {
   char ch = 0;
   while (std::cin.get(ch)) {
-    if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
-      continue;
+    if (!isDelimiter(ch)) {
+      recordChar(table, ch);
     }
-    const int idx = static_cast<unsigned char>(ch);
-    if (table.counts[idx] == 0) {
-      table.order[table.orderSize] = ch;
-      ++table.orderSize;
-    }
-    ++table.counts[idx];
   }
   if (!std::cin.eof()) {
     std::cerr << "Input read error\n";
