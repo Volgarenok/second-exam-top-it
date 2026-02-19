@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cctype>
 
 namespace nabieva
 {
@@ -19,7 +20,7 @@ int main(int argc, char* argv[])
     std::cerr << "Invalid arguments\n";
     return 1;
   }
-  if (argc == 2 && !(std::strcmp(argv[1], "reverse"))) {
+  if (argc == 2 && std::strcmp(argv[1], "reverse")) {
     std::cerr << "Invalid arguments\n";
     return 1;
   }
@@ -30,8 +31,8 @@ int main(int argc, char* argv[])
     if (!(std::cin >> symb)) {
       break;
     }
-    if (std::cin.eof()) {
-      break;
+    if (std::isspace(symb)) {
+      continue;
     }
     bool findSymb = false;
     for (size_t i = 0; i < countPair; i++) {
