@@ -64,6 +64,24 @@ namespace gordejchik
       }
       out << '\n';
     }
+
+    void printPairs(std::ostream& out) const
+    {
+      if (size == 0) {
+        out << '\n';
+        return;
+      }
+      size_t i = 0;
+      while (i < size) {
+        const char current = data[i];
+        size_t count = 0;
+        while (i < size && data[i] == current) {
+          ++count;
+          ++i;
+        }
+        out << count << ' ' << current << '\n';
+      }
+    }
   };
 }
 
