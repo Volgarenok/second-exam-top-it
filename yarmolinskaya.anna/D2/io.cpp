@@ -4,9 +4,41 @@
 
 namespace yarmolinskaya {
 
-static void printPair(char ch, std::size_t count)
+namespace {
+
+void printPair(char ch, std::size_t count)
 {
   std::cout << count << ' ' << ch << '\n';
+}
+
+void printForward(const sequence_t &seq)
+{
+  std::size_t i = 0;
+  while (i < seq.size) {
+    const char current = seq.data[i];
+    std::size_t count = 0;
+    while (i < seq.size && seq.data[i] == current) {
+      ++count;
+      ++i;
+    }
+    printPair(current, count);
+  }
+}
+
+void printBackward(const sequence_t &seq)
+{
+  std::size_t i = seq.size;
+  while (i > 0) {
+    const char current = seq.data[i - 1];
+    std::size_t count = 0;
+    while (i > 0 && seq.data[i - 1] == current) {
+      ++count;
+      --i;
+    }
+    printPair(current, count);
+  }
+}
+
 }
 
 bool readSequence(sequence_t &seq)
@@ -29,29 +61,10 @@ void printPairs(const sequence_t &seq, bool reverse)
     std::cout << '\n';
     return;
   }
-
-  if (!reverse) {
-    std::size_t i = 0;
-    while (i < seq.size) {
-      const char current = seq.data[i];
-      std::size_t count = 0;
-      while (i < seq.size && seq.data[i] == current) {
-        ++count;
-        ++i;
-      }
-      printPair(current, count);
-    }
+  if (reverse) {
+    printBackward(seq);
   } else {
-    std::size_t i = seq.size;
-    while (i > 0) {
-      const char current = seq.data[i - 1];
-      std::size_t count = 0;
-      while (i > 0 && seq.data[i - 1] == current) {
-        ++count;
-        --i;
-      }
-      printPair(current, count);
-    }
+    printForward(seq);
   }
 }
 
