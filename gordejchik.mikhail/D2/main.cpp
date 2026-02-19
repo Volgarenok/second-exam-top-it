@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstddef>
 
 namespace gordejchik
 {
@@ -78,6 +77,24 @@ namespace gordejchik
         while (i < size && data[i] == current) {
           ++count;
           ++i;
+        }
+        out << count << ' ' << current << '\n';
+      }
+    }
+
+    void printPairsReversed(std::ostream& out) const
+    {
+      if (size == 0) {
+        out << '\n';
+        return;
+      }
+      size_t i = size;
+      while (i > 0) {
+        const char current = data[i - 1];
+        size_t count = 0;
+        while (i > 0 && data[i - 1] == current) {
+          ++count;
+          --i;
         }
         out << count << ' ' << current << '\n';
       }
