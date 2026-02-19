@@ -41,21 +41,17 @@ int main()
       if (std::cin.eof()) {
         break;
       }
-      else {
-        inputError = true;
-        std::cerr << "error input unsigned number\n";
-        break;
-      }
+      inputError = true;
+      std::cerr << "error input unsigned number\n";
+      break;
     }
     if (!(std::cin >> symb)) {
       if (std::cin.eof()) {
-        break;
+        std::cerr << "error incomplete pair\n";
       }
-      else {
-        inputError = true;
-        std::cerr << "error input symb\n";
-        break;
-      }
+      inputError = true;
+      std::cerr << "error input symb\n";
+      break;
     }
     try {
       pairs = nabieva::addNewPair(pairs, countPair, num, symb);
