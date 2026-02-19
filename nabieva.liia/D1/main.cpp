@@ -15,9 +15,7 @@ namespace nabieva
     }
     aNew[countPair].count = num;
     aNew[countPair].symbol = symb;
-    if (a != nullptr) {
-      delete[] a;
-    }
+    delete[] a;
     return aNew;
   }
   void printPairs(const PairCountSymbol* pairs, size_t countPair)
@@ -37,15 +35,27 @@ int main()
   char symb = ' ';
   nabieva::PairCountSymbol* pairs = nullptr;
   size_t countPair = 0;
+  bool inputError = false;
   while (true) {
-    if (!(std::cin >> num) || !(std::cin >> symb)) {
-      std::cerr << "error input unsigned number or symb\n";
-      return 1;
+    if (!(std::cin >> num)) {
+      if (std::cin.eof()) {
+        break;
+      }
+      else {
+        inputError = true;
+        std::cerr << "error input unsigned number\n";
+        break;
+      }
     }
-    if (std::cin.eof()) {
-      nabieva::printPairs(pairs, countPair);
-      delete[] pairs;
-      break;
+    if (!(std::cin >> symb)) {
+      if (std::cin.eof()) {
+        break;
+      }
+      else {
+        inputError = true;
+        std::cerr << "error input symb\n";
+        break;
+      }
     }
     try {
       pairs = nabieva::addNewPair(pairs, countPair, num, symb);
@@ -56,6 +66,11 @@ int main()
       delete[] pairs;
       return 2;
     }
+  }
+  nabieva::printPairs(pairs, countPair);
+  delete[] pairs;
+  if (inputError == true) {
+    return 1;
   }
   return 0;
 }
