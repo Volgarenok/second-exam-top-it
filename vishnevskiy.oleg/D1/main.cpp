@@ -31,6 +31,7 @@ int main()
     }
     catch (...)
     {
+      delete[] seq;
       return 2;
     }
   }
