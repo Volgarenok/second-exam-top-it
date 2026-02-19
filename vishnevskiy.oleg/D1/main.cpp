@@ -3,6 +3,10 @@
 char *extend(char *seq, char sym, size_t amount, size_t &s)
 {
   char *tmpseq = new char[s+amount];
+  if (!tmpseq)
+  {
+    throw;
+  }
   for (size_t i = 0; i < s; i++)
   {
     tmpseq[i] = seq[i];
