@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 namespace gordejchik
 {
@@ -56,14 +57,6 @@ namespace gordejchik
       return 0;
     }
 
-    void printReversed(std::ostream& out) const
-    {
-      for (size_t i = size; i > 0; --i) {
-        out << data[i - 1];
-      }
-      out << '\n';
-    }
-
     void printPairs(std::ostream& out) const
     {
       if (size == 0) {
@@ -102,11 +95,24 @@ namespace gordejchik
   };
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+  if (argc > 2) {
+    std::cerr << "Invalid arguments\n";
+    return 1;
+  }
+  const bool reverse = (argc == 2) && (std::strcmp(argv[1], "reverse") == 0);
+  if (argc == 2 && !reverse) {
+    std::cerr << "Invalid arguments\n";
+    return 1;
+  }
   gordejchik::CharSequence seq;
   const int result = seq.read(std::cin);
-  seq.printReversed(std::cout);
+  if (reverse) {
+    seq.printPairsReversed(std::cout);
+  } else {
+    seq.printPairs(std::cout);
+  }
   seq.free();
   if (result == 1) {
     std::cerr << "Invalid input\n";
