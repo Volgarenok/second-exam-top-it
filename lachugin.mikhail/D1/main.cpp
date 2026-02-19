@@ -59,9 +59,35 @@ int main()
   size_t k = 0;
   size_t cap = 0;
   size_t start = 0;
-  while (std::cin >> n >> c)
+  while (true)
   {
-    char* arr = new char[n];
+    if (!(std::cin >> n))
+      break;
+
+    if (!(std::cin >> c))
+    {
+      lachugin::printReversed(arrs, longs, k);
+      std::cout << "\n";
+      std::cerr << "Error: invalid input\n";
+
+      lachugin::freeArrs(arrs, k);
+      delete[] longs;
+      return 1;
+    }
+
+    char* arr = nullptr;
+    try
+    {
+      arr = new char[n];
+    }
+    catch (const std::bad_alloc&)
+    {
+      lachugin::freeArrs(arrs, k);
+      delete[] longs;
+      std::cout << "\n";
+      return 2;
+    }
+
     for (size_t i = 0; i < n; ++i)
     {
       arr[i] = c;
