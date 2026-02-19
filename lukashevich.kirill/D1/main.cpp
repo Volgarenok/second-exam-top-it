@@ -108,7 +108,7 @@ namespace lukashevich
   {
     delete [] pairs;
     std::cout << "\n";
-    return 1;
+    return 0;
   }
 
     size_t seq_len = 0;
