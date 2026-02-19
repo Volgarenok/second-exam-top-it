@@ -7,13 +7,27 @@ namespace nabieva
     size_t count;
     char symbol;
   };
+  PairCountSymbol* addNewPair(PairCountSymbol* a, size_t countPair, size_t num, char symb)
+  {
+    PairCountSymbol* aNew = new PairCountSymbol[countPair + 1];
+    for (int i = 0; i < countPair; i++) {
+      aNew[i] = a[i];
+    }
+    aNew[countPair].count = num;
+    aNew[countPair].symbol = symb;
+    if (a != nullptr) {
+      aNew[countPair].count = num;
+    }
+    return aNew;
+  }
 }
 
 int main()
 {
   size_t num = 0;
   char symb = '';
-  
+  nabieva::PairCountSymbol* pairs = nullptr;
+  size_t countPair = 0;
   while (std::cin) {
     if (!std::cin << num) {
       std::cerr << "error input unsigned number\n";
@@ -23,5 +37,6 @@ int main()
       std::cerr << "error input symbol\n";
       return 1;
     }
+    pairs = addNewPair(pairs, countPair, num, symb);
   }
 }
