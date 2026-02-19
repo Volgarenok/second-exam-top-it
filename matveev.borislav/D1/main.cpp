@@ -21,6 +21,7 @@ int main()
     {
       delete[] data;
       std::cerr << "input error\n";
+      std::cout << '\n';
       return 1;
     }
 
@@ -64,6 +65,7 @@ int main()
   {
     delete[] data;
     std::cerr << "input error\n";
+    std::cout << '\n';
     return 1;
   }
 
