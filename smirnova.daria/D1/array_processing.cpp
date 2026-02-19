@@ -31,9 +31,8 @@ std::pair<char *, std::size_t> smirnova::buildSequence(int &error_code)
   char ch = '\0';
   while (std::cin >> count) {
     if (!(std::cin >> ch)) {
-      delete[] seq;
       error_code = 1;
-      return {nullptr, 0};
+      return {seq, size};
     }
     if (size + count > capacity) {
       std::size_t new_cap = capacity;
@@ -42,9 +41,8 @@ std::pair<char *, std::size_t> smirnova::buildSequence(int &error_code)
       }
       char *new_seq = growBuffer(seq, size, new_cap);
       if (new_seq == nullptr) {
-        delete[] seq;
         error_code = 2;
-        return {nullptr, 0};
+        return {seq, size};
       }
       delete[] seq;
       seq = new_seq;
@@ -57,9 +55,8 @@ std::pair<char *, std::size_t> smirnova::buildSequence(int &error_code)
   }
 
   if (!std::cin.eof()) {
-    delete[] seq;
     error_code = 1;
-    return {nullptr, 0};
+    return {seq, size};
   }
 
   return {seq, size};
