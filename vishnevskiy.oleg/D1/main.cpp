@@ -36,7 +36,9 @@ int main()
   {
     for (size_t i = 0; i <= s; i++)
     {
-      std::cout << seq[s-i];
+      if (i <= s){
+        std::cout << seq[s-i];
+      }
     }
     std::cout << "\n";
     return 0;
