@@ -1,11 +1,24 @@
 #include <iostream>
-
+namespace alisov
+{
+  void resize(char *&ans, size_t &len, size_t &cap)
+  {
+    char *new_ans = new char[cap * 2];
+    for (size_t i = 0; i < len; ++i)
+    {
+      new_ans[i] = ans[i];
+    }
+    delete[] ans;
+    ans = new_ans;
+    cap *= 2;
+  }
+}
 int main()
 {
   char *ans = nullptr;
   size_t len = 0, cap = 0;
   size_t k;
-  char cr;
+  char ch;
 
   while (true)
   {
@@ -18,8 +31,23 @@ int main()
       else
       {
         std::cerr << "Cant read 1 of parameters" << '\n';
+        delete[] ans;
         return 1;
       }
+    }
+    if (!(std::cin >> ch))
+    {
+      std::cerr << "Cant read 1 of parameters" << '\n';
+      delete[] ans;
+      return 1;
+    }
+    if (k == 0)
+    {
+      continue;
+    }
+    if (len + k > cap)
+    {
+      alisov::resize(ans, len, cap);
     }
   }
 }
