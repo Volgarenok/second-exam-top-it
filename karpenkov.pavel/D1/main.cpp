@@ -7,8 +7,7 @@ namespace karpenkov{
       str[i] = arr[i];
     }
     delete[] arr;
-    arr = str;
-    return arr;
+    return str;
   }
   char * addNewLetters(char * arr, size_t& size, size_t count, char letter){
     for (size_t i = 0; i < count; i++){
@@ -21,6 +20,14 @@ namespace karpenkov{
       std::cout << arr[i - 1];
     }
   }
+  char * cut (char * arr, size_t size){
+    char * str = new char[size];
+    for (size_t i = 0; i < size; i++){
+      str[i] = arr[i];
+    }
+    delete[] arr;
+    return str;
+  }
 }
 
 int main()
@@ -29,7 +36,11 @@ int main()
   char letter;
   char * r = new char[cap];
   while (std::cin >> number){
-    std::cin >> letter;
+    if (!(std::cin >> letter)){
+      std::cerr << "input error" << '\n';
+      delete [] r;
+      return 1;
+    }
     if (size + number >= cap){
       try{
         r = karpenkov::expand(r, size, number);
@@ -38,11 +49,21 @@ int main()
       }
       catch(std::bad_alloc){
         std::cerr << "bad_alloc" << '\n';
+         delete [] r;
         return 2;
       }
     }
     else{
       r = karpenkov::addNewLetters(r, size, number, letter);
+    }
+  }
+  if (size < cap){
+    try{
+      r = karpenkov::cut(r, size);
+    }
+    catch(std::bad_alloc){
+      std::cerr << "bad_alloc" << '\n';
+      delete [] r;
     }
   }
   karpenkov::reverseLetters(r, size);
