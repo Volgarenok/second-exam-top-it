@@ -51,6 +51,6 @@ char* extend(char *data, unsigned int &cap) {
     return newData;
   } catch(...) {
     delete [] data;
-    return nullptr;  
+    return nullptr;
   }
 }
