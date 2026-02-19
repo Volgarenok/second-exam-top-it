@@ -1,33 +1,62 @@
 #include <iostream>
+#include <new>
 
 int main()
 {
   unsigned int b;
   char a;
-  std::size_t max = 100000;
-  char data[max];
   std::size_t sum = 0;
+  char* data = nullptr;
+  std::size_t cap = 0;
 
   while (std::cin >> b >> a)
   {
+    if (sum + b > cap)
+    {
+      std::size_t new_cap = (cap == 0) ? 1 : cap;
+      while (new_cap < sum + b)
+      {
+        new_cap *= 2;
+      }
+      char* new_data = nullptr;
+
+      try
+      {
+        new_data = new char[new_cap];
+      }
+      catch (const std::bad_alloc&)
+      {
+        delete[] data;
+        std::cerr << "memory error\n";
+        return 2;
+      }
+
+      for (std::size_t i = 0; i < sum; ++i)
+      {
+        new_data[i] = data[i];
+      }
+      delete[] data;
+      data = new_data;
+      cap = new_cap;
+    }
     for (unsigned int i = 0; i < b; ++i)
     {
-      if (sum < max)
-      {
-        data[sum++] = a;
-      }
+      data[sum++] = a;
     }
   }
 
   if (!std::cin.eof())
   {
+    delete[] data;
     std::cerr << "input error\n";
     return 1;
   }
+
   for (std::size_t i = sum; i > 0; --i)
   {
-    std::cout << data[i-1];
+    std::cout << data[i - 1];
   }
   std::cout << '\n';
+  delete[] data;
   return 0;
 }
