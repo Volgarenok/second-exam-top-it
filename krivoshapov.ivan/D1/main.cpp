@@ -25,7 +25,7 @@ namespace krivoshapov
           data = new_data;
           capacity = new_cap;
         }
-        catch (std::bad_alloc &)
+        catch (...)
         {
           return false;
         }
@@ -37,6 +37,13 @@ namespace krivoshapov
     size_t get_size() const { return size; }
     const char *get_data() const { return data; }
   };
+
+  void print_reverse(const DynArray &arr)
+  {
+    for (size_t i = arr.get_size(); i > 0; --i)
+      std::cout << arr.get_data()[i - 1];
+    std::cout << std::endl;
+  }
 }
 
 int main()
@@ -49,6 +56,7 @@ int main()
   {
     if (!(std::cin >> ch))
     {
+      krivoshapov::print_reverse(arr);
       std::cerr << "Failed to read character\n";
       return 1;
     }
@@ -65,15 +73,11 @@ int main()
 
   if (!std::cin.eof() && std::cin.fail())
   {
+    krivoshapov::print_reverse(arr);
     std::cerr << "Failed to read count\n";
     return 1;
   }
 
-  for (size_t i = arr.get_size(); i > 0; --i)
-  {
-    std::cout << arr.get_data()[i - 1];
-  }
-  std::cout << std::endl;
-
+  krivoshapov::print_reverse(arr);
   return 0;
 }
