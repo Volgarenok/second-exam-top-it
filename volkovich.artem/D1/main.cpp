@@ -34,15 +34,16 @@ int main()
       delete[] all_counts;
       delete[] tmp_symbs;
       delete[] tmp_counts;
+      std::cout<< "Bad alloc";
       return 2;
     }
     symbs_len++;
   }
-  if (std::cin.bad())
-  {
-    return 1;
+  if (!std::cin.eof()) {
+    std::cout<<"Bad input";
+    return 2;
   }
-  for (size_t i = 0; i < symbs_len; i++)
+  for (size_t i = symbs_len-1; i >=0 ; i--)
   {
     for (size_t j = 0; j < all_counts[i]; j++)
     {
