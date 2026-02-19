@@ -4,31 +4,28 @@ namespace rizatdinov
 {
   void extend(char ** str_array, size_t k, size_t d);
   void extend(unsigned ** num_array, size_t k, size_t d);
+  void handleInput(unsigned ** num_array, char ** str_array, size_t & size);
 }
 
 int main()
 {
   unsigned * num_array = nullptr;
   char * str_array = nullptr;
-  size_t size_array = 3;
+  size_t size = 0;
 
   try {
-    num_array = new unsigned[3]{ 2, 0, 3 };
-    str_array = new char[3]{ 'a', 'b', 'c' };
-
-    rizatdinov::extend(&num_array, 3, 2);
-    for (size_t i = 0; i < 2; ++i) {
-      std::cout << num_array[i] << '\n';
-    }
-    rizatdinov::extend(&str_array, 3, 2);
-    for (size_t i = 0; i < 2; ++i) {
-      std::cout << str_array[i] << '\n';
-    }
+    rizatdinov::handleInput(&num_array, &str_array, size);
   } catch(...) {
     std::cout << "Error: 1\n";
+
     delete[] num_array;
     delete[] str_array;
+
     return 1;
+  }
+
+  for (size_t i = 0; i < size; ++i) {
+    std::cout << num_array[i] << ' ' << str_array[i] << '\n';
   }
 
   delete[] num_array;
@@ -55,4 +52,26 @@ void rizatdinov::extend(unsigned ** num_array, size_t k, size_t d)
   }
   delete[] *num_array;
   *num_array = new_array;
+}
+
+void rizatdinov::handleInput(unsigned ** num_array, char ** str_array, size_t & size)
+{
+  size_t sizeD = 2;
+  char * str_data = new char[sizeD];
+  unsigned * num_data = new unsigned[sizeD];
+
+  size_t i = 0;
+  for (; std::cin >> num_data[i] >> str_data[i] && !std::cin.eof(); ++i) {
+    if (i + 1 == sizeD) {
+      rizatdinov::extend(&str_data, sizeD, sizeD + sizeD*2);
+      rizatdinov::extend(&num_data, sizeD, sizeD + sizeD*2);
+      sizeD += sizeD*2;
+    }
+  }
+  rizatdinov::extend(&str_data, sizeD, i);
+  rizatdinov::extend(&num_data, sizeD, i);
+
+  size = i;
+  *str_array = str_data;
+  *num_array = num_data;
 }
