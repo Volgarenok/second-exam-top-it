@@ -45,13 +45,9 @@ namespace gordejchik
 
     int read(std::istream& in)
     {
-      size_t count = 0;
       char ch = '\0';
-      while (in >> count) {
-        if (!(in >> ch)) {
-          return 1;
-        }
-        if (!append(ch, count)) {
+      while (in >> ch) {
+        if (!append(ch, 1)) {
           return 2;
         }
       }
