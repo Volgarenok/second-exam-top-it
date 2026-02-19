@@ -6,12 +6,25 @@ namespace lachugin
   {
     size_t newCap = (oldCap == 0) ? 2 : oldCap * 2;
     char** newArr = new char* [newCap];
-    for (size_t i = 0; i < oldCap; ++i) {
+    for (size_t i = 0; i < oldCap; ++i)
+    {
       newArr[i] = (*arrs)[i];
     }
     delete[] (*arrs);
     *arrs = newArr;
     oldCap = newCap;
+  }
+
+  void expendLongs(size_t** longs, size_t& oldSize)
+  {
+    size_t newSize = (oldSize == 0) ? 2 : oldSize * 2;
+    size_t *newLengths = new size_t [newSize];
+    for (size_t i = 0; i < oldSize; ++i) {
+      newLengths[i] = (*longs)[i];
+    }
+    delete[] *longs;
+    *longs = newLengths;
+    oldSize = newSize;
   }
 }
 
