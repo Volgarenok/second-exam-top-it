@@ -1,5 +1,6 @@
 #include <iostream>
 #include <new>
+#include <limits>
 
 int main()
 {
@@ -9,8 +10,20 @@ int main()
   char* data = nullptr;
   std::size_t cap = 0;
 
-  while (std::cin >> b >> a)
+  while (true)
   {
+    if (!(std::cin >> b))
+    {
+      break;
+    }
+
+    if (!(std::cin >> a))
+    {
+      delete[] data;
+      std::cerr << "input error\n";
+      return 1;
+    }
+
     if (sum + b > cap)
     {
       std::size_t new_cap = (cap == 0) ? 1 : cap;
@@ -18,8 +31,8 @@ int main()
       {
         new_cap *= 2;
       }
-      char* new_data = nullptr;
 
+      char* new_data = nullptr;
       try
       {
         new_data = new char[new_cap];
@@ -35,10 +48,12 @@ int main()
       {
         new_data[i] = data[i];
       }
+
       delete[] data;
       data = new_data;
       cap = new_cap;
     }
+
     for (unsigned int i = 0; i < b; ++i)
     {
       data[sum++] = a;
@@ -56,6 +71,7 @@ int main()
   {
     std::cout << data[i - 1];
   }
+
   std::cout << '\n';
   delete[] data;
   return 0;
