@@ -51,7 +51,30 @@ namespace lukashevich
     }
     return true;
   }
+
+  char* build_seq(const char_pair* pairs, size_t count_pairs, size_t& total_len)
+  {
+    total_len = 0;
+    for (size_t i = 0; i < count_pairs; ++i)
+    {
+      total_len += pairs[i].count;
+    }
+
+    char* seq = new char [total_len];
+
+    size_t pos = 0;
+    for (size_t i = 0; i < count_pairs; ++i)
+    {
+      for (size_t k = 0; k < pairs[i].count; ++k)
+      {
+        seq[++pos] = pairs[i].symbol;
+      }
+    }
+    return seq;
+  }
 }
+
+
 int main()
 {
   return 0;
