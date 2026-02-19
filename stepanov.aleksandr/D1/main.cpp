@@ -14,9 +14,11 @@ int main()
   try {
     data = stepanov::readInput(std::cin, size);
   } catch (const std::bad_alloc& e) {
+    std::cout << '\n';
     std::cerr << "bad alloc\n";
     return 2;
   } catch (const std::runtime_error& e) {
+    std::cout << '\n';
     std::cerr << e.what() << '\n';
     return 1;
   }
@@ -33,11 +35,12 @@ int main()
 
 stepanov::repeatedChar stepanov::readLine(std::istream& in, bool& success)
 {
-  repeatedChar line = { 0, '\0' };
-  in >> line.first >> line.second;
-  if (in.fail() && !in.eof()) {
-    success = false;
+  repeatedChar line = {0, '\0'};
+  if (!(in >> line.first)) {
     return line;
+  }
+  if (!(in >> line.second)) {
+    success = false;
   }
   return line;
 }
