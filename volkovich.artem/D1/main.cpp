@@ -16,7 +16,7 @@ int main()
     {
       tmp_symbs = new char[symbs_len + 1];
       tmp_counts = new size_t[symbs_len + 1];
-      for (int i = 0; i < symbs_len; i++)
+      for (size_t i = 0; i < symbs_len; i++)
       {
         tmp_symbs[i] = symbs[i];
         tmp_counts[i] = all_counts[i];
