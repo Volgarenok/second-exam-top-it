@@ -10,8 +10,12 @@ int main()
   size_t *tmp_counts = nullptr;
   char *tmp_symbs = nullptr;
   char *symbs = nullptr;
-  while (std::cin >> symb_count && std::cin >> symb)
+  while (std::cin >> symb_count)
   {
+    if (!(std::cin >> symb)) {
+      std::cout<<"Bad input";
+      return 2;
+    }
     try
     {
       tmp_symbs = new char[symbs_len + 1];
@@ -43,7 +47,7 @@ int main()
     std::cout<<"Bad input";
     return 2;
   }
-  for (size_t i = symbs_len-1; i >=0 ; i--)
+  for (size_t i = symbs_len; i-->0; )
   {
     for (size_t j = 0; j < all_counts[i]; j++)
     {
