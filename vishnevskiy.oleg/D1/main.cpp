@@ -1,26 +1,5 @@
 #include <iostream>
 
-char *extend(char *seq, char sym, size_t amount, size_t &s)
-{
-  char *tmpseq = new char[s+amount];
-  if (!tmpseq)
-  {
-    delete[] tmpseq;
-    throw;
-  }
-  for (size_t i = 0; i < s; i++)
-  {
-    tmpseq[i] = seq[i];
-  }
-  for (size_t i = s; i < s + amount; i++)
-  {
-    tmpseq[i] = sym;
-  }
-  delete[] seq;
-  s = s+amount;
-  return tmpseq;
-}
-
 int main()
 {
   char sm;
@@ -28,15 +7,29 @@ int main()
   char *seq = new char[s];
   while (std::cin >> nm >> sm)
   {
+    char *tmpseq = nullptr;
     try
     {
-      seq = extend(seq, sm, nm, s);
+      tmpseq = new char[(s+nm)];
     }
     catch (...)
     {
       delete[] seq;
       return 2;
     }
+    for (size_t i = 0; i < s; i++)
+    {
+      tmpseq[i] = seq[i];
+    }
+    for (size_t i = s; i < s + nm; i++)
+    {
+      tmpseq[i] = sm;
+    }
+    delete[] seq;
+    seq = tmpseq;
+    tmpseq = nullptr;
+    s = s+nm;
+
   }
   if (std::cin.eof())
   {
