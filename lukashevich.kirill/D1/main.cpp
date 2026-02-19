@@ -79,9 +79,9 @@ namespace lukashevich
 
   void print_seq(const char* seq, size_t len)
   {
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i = len; i > 0; i--)
     {
-      std::cout << seq[i];
+      std::cout << seq[i-1];
     }
     std::cout << "\n";
   }
