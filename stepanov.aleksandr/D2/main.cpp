@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
   for (size_t id = 0; id < size; id++) {
     if (reverse) {
-      std::cout << data[size - id - 1].second << ' ' << data[size - id - 1].first << '\n';
+      std::cout << data[size - id - 1].first << ' ' << data[size - id - 1].second << '\n';
     } else {
       std::cout << data[id].first << ' ' << data[id].second << '\n';
     }
