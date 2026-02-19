@@ -24,7 +24,19 @@ int main()
       seqv[i] = nullptr;
     }
 
-    while (std::cin >> size >> c) {
+    while (std::cin >> size) {
+      if (!(std::cin >> c)) {
+        std::cerr << "Invalid argument.\n";
+
+        for (size_t i = 0; i < size_seqv; ++i) {
+          delete[] seqv[i];
+        }
+        delete[] seqv;
+        delete[] lens;
+
+        return 1;
+      }
+
       if (size == 0) {
         continue;
       }
@@ -46,6 +58,18 @@ int main()
       size_seqv++;
     }
 
+    if (std::cin.fail() && !std::cin.eof()) {
+      std::cerr << "Invalid argument.\n";
+
+      for (size_t i = 0; i < size_seqv; ++i) {
+        delete[] seqv[i];
+      }
+      delete[] seqv;
+      delete[] lens;
+
+      return 1;
+    }
+
     if (size_seqv > 0) {
       for (size_t i = size_seqv; i > 0; --i) {
         size_t idx = i - 1;
@@ -54,8 +78,7 @@ int main()
         }
       }
     }
-
-    std::cout << std::endl;
+    std::cout << "\n";
 
     for (size_t i = 0; i < size_seqv; ++i) {
       delete[] seqv[i];
@@ -73,9 +96,7 @@ int main()
       }
       delete[] seqv;
     }
-
     delete[] lens;
-
     return 2;
   }
 }
