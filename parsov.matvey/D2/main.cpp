@@ -37,6 +37,24 @@ namespace parsov
     newArray[oldSize] = newPair;
     return newArray;
   }
+
+  void reversePairs(std::pair<unsigned int, char>* pairs, std::size_t size)
+  {
+    if (size == 0)
+    {
+      return;
+    }
+    std::size_t left = 0;
+    std::size_t right = size - 1;
+    while (left < right)
+    {
+      const std::pair<unsigned int, char> temp = pairs[left];
+      pairs[left] = pairs[right];
+      pairs[right] = temp;
+      left = left + 1;
+      right = right - 1;
+    }
+  }
 }
 
 int main(int argc, char** argv)
@@ -82,6 +100,7 @@ int main(int argc, char** argv)
         if (!newPairs)
         {
           std::cerr << "failed to allocate memory\n";
+          std::cout << "\n";
           delete[] pairs;
           return 2;
         }
@@ -98,6 +117,7 @@ int main(int argc, char** argv)
     if (!newPairs)
     {
       std::cerr << "failed to allocate memory\n";
+      std::cout << "\n";
       delete[] pairs;
       return 2;
     }
@@ -108,17 +128,17 @@ int main(int argc, char** argv)
 
   if (isReverse)
   {
-    for (std::size_t i = pairsSize; i > 0; --i)
-    {
-      std::cout << pairs[i - 1].first << " " << pairs[i - 1].second << "\n";
-    }
+    parsov::reversePairs(pairs, pairsSize);
   }
-  else
+
+  for (std::size_t i = 0; i < pairsSize; ++i)
   {
-    for (std::size_t i = 0; i < pairsSize; ++i)
-    {
-      std::cout << pairs[i].first << " " << pairs[i].second << "\n";
-    }
+    std::cout << pairs[i].first << " " << pairs[i].second << "\n";
+  }
+
+  if (pairsSize == 0)
+  {
+    std::cout << "\n";
   }
 
   delete[] pairs;
