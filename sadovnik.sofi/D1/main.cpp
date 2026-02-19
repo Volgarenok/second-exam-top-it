@@ -1,6 +1,5 @@
 #include <iostream>
 #include <new>
-#include <cstdlib>
 
 namespace sadovnik {
 
@@ -48,8 +47,8 @@ public:
   void push_back(char c)
   {
     if (size_ >= capacity_) {
-      const std::size_t new_cap = (capacity_ == 0) ? 4 : capacity_ * 2;
-      char* const new_data = new char[new_cap];
+      std::size_t new_cap = (capacity_ == 0) ? 4 : capacity_ * 2;
+      char* new_data = new char[new_cap];
       for (std::size_t i = 0; i < size_; ++i) {
         new_data[i] = data_[i];
       }
@@ -81,7 +80,7 @@ private:
   std::size_t capacity_;
 };
 
-}
+} // namespace sadovnik
 
 int main()
 {
@@ -93,12 +92,16 @@ int main()
   char ch;
 
   while (std::cin >> count >> ch) {
+    if (count == 0) {
+      continue;
+    }
     try {
       for (unsigned int i = 0; i < count; ++i) {
         sequence.push_back(ch);
       }
     } catch (const std::bad_alloc&) {
       std::cerr << "Memory allocation failed\n";
+      std::cout << '\n';
       return 2;
     }
   }
