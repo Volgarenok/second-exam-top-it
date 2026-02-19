@@ -12,7 +12,7 @@ int main() {
   while (true) {
     std::cin >> num;
     std::cin >> bukv;
-    if (std::cin.fail()) { 
+    if (std::cin.fail()) {
       std::cerr << "Invalid input" << '\n';
       delete[] h;
       return 1;
