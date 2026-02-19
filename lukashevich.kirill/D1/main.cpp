@@ -72,6 +72,53 @@ namespace lukashevich
     }
     return seq;
   }
+
+  void print_seq(const char* seq, size_t len)
+  {
+    for (size_t i = 0; i < len; ++i)
+    {
+      std::cout << seq[i];
+    }
+    std::cout << "\n";
+  }
+
+  int proc()
+  {
+    char_pair* pairs = nullptr;
+    size_t arr_size = 0, pairs_count = 0;
+    try {
+      if (!read_pair(pairs, arr_size, pairs_count))
+      {
+        std::cerr << "error input" << "\n";
+        delete [] pairs;
+        return 1;
+      }
+    } catch(const std::bad_alloc&) {
+      std::cerr << "error memory" << "\n";
+      delete [] pairs;
+      return 2;
+    }
+
+    size_t seq_len = 0;
+    char* seq = nullptr;
+
+    try {
+      seq = build_seq(pairs, pairs_count, seq_len);
+    } catch (const std::bad_alloc&) {
+      std::cerr << "error memory" << "\n";
+      std::cout << "\n";
+      delete [] pairs;
+      return 2;
+    }
+
+    delete [] pairs;
+
+    print_seq(seq, seq_len);
+    
+    delete [] seq;
+
+    return 0;
+  }
 }
 
 
