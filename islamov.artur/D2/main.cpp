@@ -1,4 +1,6 @@
 #include <iostream>
+#include <new>
+#include <limits>
 
 int main(int argc, char* argv[])
 {
@@ -23,10 +25,21 @@ int main(int argc, char* argv[])
       return 1;
     }
   }
-  char* symb = new char[16];
-  unsigned int* counts = new unsigned int[16];
-  std::size_t cap = 16;
+  char* symb = nullptr;
+  unsigned int* counts = nullptr;
+  std::size_t cap = 0;
   std::size_t size = 0;
+  try
+  {
+    symb = new char[16];
+    counts = new unsigned int[16];
+    cap = 16;
+  }
+  catch (const std::bad_alloc&)
+  {
+    std::cerr << "Memory allocation error\n";
+    return 2;
+  }
   char ch;
   while (std::cin >> ch)
   {
@@ -34,14 +47,35 @@ int main(int argc, char* argv[])
     while (i < size && symb[i] != ch)
       ++i;
     if (i < size)
+    {
+      if (counts[i] == std::numeric_limits< unsigned int >::max())
+      {
+        delete[] symb;
+        delete[] counts;
+        std::cerr << "Error: too many characters\n";
+        return 2;
+      }
       ++counts[i];
+    }
     else
     {
       if (size == cap)
       {
         std::size_t new_cap = cap * 2;
-        char* new_symb = new char[new_cap];
-        unsigned int* new_counts = new unsigned int[new_cap];
+        char* new_symb = nullptr;
+        unsigned int* new_counts = nullptr;
+        try
+        {
+          new_symb = new char[new_cap];
+          new_counts = new unsigned int[new_cap];
+        }
+        catch (const std::bad_alloc&)
+        {
+          delete[] symb;
+          delete[] counts;
+          std::cerr << "Memory allocation error\n";
+          return 2;
+        }
         for (std::size_t j = 0; j < size; ++j)
         {
           new_symb[j] = symb[j];
@@ -57,6 +91,13 @@ int main(int argc, char* argv[])
       counts[size] = 1;
       ++size;
     }
+  }
+  if (!std::cin.eof() && std::cin.fail())
+  {
+    delete[] symb;
+    delete[] counts;
+    std::cerr << "Input error\n";
+    return 1;
   }
   if (size == 0)
     std::cout << std::endl;
