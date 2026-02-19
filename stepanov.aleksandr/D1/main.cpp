@@ -3,24 +3,21 @@
 namespace stepanov
 {
   using repeatedChar = std::pair<size_t, char>;
-  repeatedChar readLine(std::istream& in, bool& success);
-  repeatedChar* readInput(std::istream& in, size_t& size);
+  repeatedChar readLine(std::istream& in, bool& badInput);
+  repeatedChar* readInput(std::istream& in, size_t& size, bool& badInput);
 }
 
 int main()
 {
   size_t size = 0;
   stepanov::repeatedChar* data = nullptr;
+  bool wasBadInput = false;
   try {
-    data = stepanov::readInput(std::cin, size);
+    data = stepanov::readInput(std::cin, size, wasBadInput);
   } catch (const std::bad_alloc& e) {
     std::cout << '\n';
     std::cerr << "bad alloc\n";
     return 2;
-  } catch (const std::runtime_error& e) {
-    std::cout << '\n';
-    std::cerr << e.what() << '\n';
-    return 1;
   }
 
   for (size_t id = size; id > 0; id--) {
@@ -30,31 +27,39 @@ int main()
   }
   std::cout << '\n';
   delete[] data;
+
+  if (wasBadInput) {
+    std::cerr << "bad input\n";
+    return 1;
+  }
+
   return 0;
 }
 
-stepanov::repeatedChar stepanov::readLine(std::istream& in, bool& success)
+stepanov::repeatedChar stepanov::readLine(std::istream& in, bool& badInput)
 {
   repeatedChar line = {0, '\0'};
   if (!(in >> line.first)) {
+    if (!in.eof()) {
+      badInput = true;
+    }
     return line;
   }
   if (!(in >> line.second)) {
-    success = false;
+    badInput = true;
   }
   return line;
 }
 
-stepanov::repeatedChar* stepanov::readInput(std::istream& in, size_t& size)
+stepanov::repeatedChar* stepanov::readInput(std::istream& in, size_t& size, bool& badInput)
 {
   const size_t step = 10;
   size_t capacity = 10;
   auto* mem = new stepanov::repeatedChar[capacity];
 
-  bool success = true;
-  auto c = readLine(in, success);
-  while (!in.eof() && success) {
-    if (size + 1 >= capacity) {
+  auto c = readLine(in, badInput);
+  while (!in.eof() && !badInput) {
+    if (size + 1 > capacity) {
       stepanov::repeatedChar* newMem = nullptr;
       try {
         newMem = new stepanov::repeatedChar[capacity + step];
@@ -71,12 +76,7 @@ stepanov::repeatedChar* stepanov::readInput(std::istream& in, size_t& size)
     }
     mem[size] = c;
     size++;
-    c = readLine(in, success);
-  }
-
-  if (!success) {
-    delete[] mem;
-    throw std::runtime_error("bad input");
+    c = readLine(in, badInput);
   }
   return mem;
 }
