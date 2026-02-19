@@ -30,7 +30,8 @@ namespace lukashevich
 
       if (!(std::cin >> pair.symbol))
       {
-        break;
+        delete [] pair_arr;
+        return false;
       }
 
       if (count_pair >= size_arr)
@@ -107,7 +108,7 @@ namespace lukashevich
   {
     delete [] pairs;
     std::cout << "\n";
-    return 0;
+    return 1;
   }
 
     size_t seq_len = 0;
