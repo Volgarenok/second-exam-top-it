@@ -20,6 +20,14 @@ int main()
     std::cerr << e.what() << '\n';
     return 1;
   }
+
+  for (size_t id = size; id > 0; id--) {
+    for (size_t rpt = 0; rpt < data[id - 1].first; rpt++) {
+      std::cout << data[id - 1].second;
+    }
+  }
+  std::cout << '\n';
+  delete[] data;
   return 0;
 }
 
@@ -44,19 +52,19 @@ stepanov::repeatedChar* stepanov::readInput(std::istream& in, size_t& size)
   auto c = readLine(in, success);
   while (!in.eof() && success) {
     if (size + 1 >= capacity) {
-      stepanov::repeatedChar* new_mem = nullptr;
+      stepanov::repeatedChar* newMem = nullptr;
       try {
-        new_mem = new stepanov::repeatedChar[capacity + step];
+        newMem = new stepanov::repeatedChar[capacity + step];
       } catch (const std::bad_alloc& e) {
         delete[] mem;
         throw;
       }
       capacity += step;
       for (size_t i = 0; i < size; i++) {
-        new_mem[i] = mem[i];
+        newMem[i] = mem[i];
       }
       delete[] mem;
-      mem = new_mem;
+      mem = newMem;
     }
     mem[size] = c;
     size++;
