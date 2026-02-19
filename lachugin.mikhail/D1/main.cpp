@@ -74,9 +74,9 @@ int main()
     longs[start++] = n;
   }
 
-  if (std::cin.fail())
+  if (!std::cin.eof() && !std::cin)
   {
-    std::cerr << "Error: invalid input sequence\n";
+    std::cerr << "Error: invalid input\n";
     lachugin::freeArrs(arrs, k);
     delete[] longs;
     return 1;
