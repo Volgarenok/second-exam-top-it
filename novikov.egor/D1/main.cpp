@@ -16,6 +16,16 @@ namespace novikov
     delete[] seqv;
     return new_seqv;
   }
+  char** cut(char**seqv, size_t s)
+  {
+    char** new_seqv = new char*[s];
+    for(size_t i =0; i<s; ++i)
+    {
+      new_seqv[i] = seqv[i];
+    }
+    delete[] seqv;
+    return new_seqv;
+  }
 
 }
 
