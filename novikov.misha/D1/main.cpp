@@ -52,12 +52,16 @@ int novikov::readInput(char ** seq, size_t * size, size_t * capacity)
 {
   while (std::cin) {
     size_t count = 0;
-    char symbol = 0;
-    std::cin >> count >> symbol;
+    std::cin >> count;
     if (!std::cin) {
       if (std::cin.eof()) {
         break;
       }
+      return 1;
+    }
+    char symbol = 0;
+    std::cin >> symbol;
+    if (!std::cin) {
       return 1;
     }
     for (size_t i = 0; i < count; ++i) {
