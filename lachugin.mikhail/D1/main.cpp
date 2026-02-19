@@ -43,19 +43,18 @@ int main()
   size_t* longs = nullptr;
 
   size_t n = 0;
+  char c = 0;
 
   size_t k = 0;
   size_t cap = 0;
   size_t start = 0;
-  while (std::cin >> n)
+  while (std::cin >> n >> c)
   {
     char* arr = new char[n];
     for (size_t i = 0; i < n; ++i)
     {
-      std::cin >> arr[i];
+      arr[i] = c;
     }
-    k++;
-
     if (cap <= k)
     {
       size_t capCoppy = cap;
@@ -64,14 +63,18 @@ int main()
         lachugin::expendArr(&arrs, cap);
         lachugin::expendLongs(&longs, capCoppy);
       }
-      catch (const std::bad_alloc& )
+      catch (const std::bad_alloc&)
       {
         lachugin::freeArrs(arrs, k);
+        delete[] arr;
         delete[] longs;
+        std::cout << "\n";
         return 2;
       }
     }
-    longs[start++] = n;
+    k++;
+    longs[start] = n;
+    arrs[start++] = arr;
   }
 
   if (!std::cin.eof() && !std::cin)
@@ -82,9 +85,9 @@ int main()
     return 1;
   }
 
-  for (size_t i = k; i > 0; --i)
+  for (size_t i = k - 1; i > 0; --i)
   {
-    for (size_t j = longs[i]; j > 0; --j)
+    for (size_t j = longs[i] - 1; j > 0; --j)
     {
       std::cout << arrs[i][j];
     }
