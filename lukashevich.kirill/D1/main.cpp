@@ -94,12 +94,13 @@ namespace lukashevich
       if (!read_pair(pairs, arr_size, pairs_count))
       {
         std::cerr << "error input" << "\n";
-        delete [] pairs;
+        std::cout << "\n";
         return 1;
       }
     } catch(const std::bad_alloc&) {
       std::cerr << "error memory" << "\n";
       delete [] pairs;
+      std::cout << "\n";
       return 2;
     }
 
