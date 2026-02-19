@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
     return 1;
   }
   char symb = ' ';
+  nabieva::PairCountSymbol* pairs = nullptr;
+  size_t countPair = 0;
   while (true) {
     if (!(std::cin >> symb)) {
       break;
@@ -30,7 +32,20 @@ int main(int argc, char* argv[])
     if (std::cin.eof()) {
       break;
     }
+    bool findSymb = false;
+    for (size_t i = 0; i < countPair; i++) {
+      if (pairs[i].symbol == symb) {
+        pairs[i].count++;
+        findSymb == true;
+        break;
+      }
+    }
+    if (findSymb == false) {
+      pairs = nabieva::addNewPair(pairs, countPair, 1, symb);
+      countPair++;
+    }
   }
+  return 0;
 }
 
 nabieva::PairCountSymbol* nabieva::addNewPair(const nabieva::PairCountSymbol* a, size_t countPair, size_t num, char symb)
