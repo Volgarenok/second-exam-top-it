@@ -13,7 +13,8 @@ int main()
   while (std::cin >> symb_count)
   {
     if (!(std::cin >> symb)) {
-      std::cout<<"Bad input";
+      std::cerr<<"Bad input";
+      std::cout<<"";
       return 2;
     }
     try
@@ -38,13 +39,15 @@ int main()
       delete[] all_counts;
       delete[] tmp_symbs;
       delete[] tmp_counts;
-      std::cout<< "Bad alloc";
+      std::cerr<< "Bad alloc";
+      std::cout<<"";
       return 2;
     }
     symbs_len++;
   }
   if (!std::cin.eof()) {
-    std::cout<<"Bad input";
+    std::cerr<<"Bad input";
+    std::cout<<"";
     return 2;
   }
   for (size_t i = symbs_len; i-->0; )
