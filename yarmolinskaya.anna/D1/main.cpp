@@ -27,4 +27,12 @@ int main()
       break;
     }
   }
+
+  yarmolinskaya::printReversed(seq);
+  yarmolinskaya::destroySequence(seq);
+
+  if (memError) {
+    return 2;
+  }
+  return 0;
 }
