@@ -4,7 +4,7 @@ namespace rizatdinov
 {
   void extend(char ** str_array, size_t k, size_t d);
   void extend(unsigned ** num_array, size_t k, size_t d);
-  size_t handleInput(unsigned ** num_array, char ** str_array);
+  bool handleInput(unsigned ** num_array, char ** str_array, size_t & size);
 }
 
 int main()
@@ -13,8 +13,9 @@ int main()
   char * str_array = nullptr;
   size_t size = 0;
 
+  bool is_good = 0;
   try {
-    size = rizatdinov::handleInput(&num_array, &str_array);
+    is_good = rizatdinov::handleInput(&num_array, &str_array, size);
   } catch(...) {
     std::cerr << "Error: 2\n";
 
@@ -24,7 +25,7 @@ int main()
     return 2;
   }
 
-  if (!size) {
+  if (is_good) {
     std::cerr << "Error: 1\n";
     return 1;
   }
@@ -63,7 +64,7 @@ void rizatdinov::extend(unsigned ** num_array, size_t k, size_t d)
   *num_array = new_array;
 }
 
-size_t rizatdinov::handleInput(unsigned ** num_array, char ** str_array)
+bool rizatdinov::handleInput(unsigned ** num_array, char ** str_array, size_t & size)
 {
   size_t sizeD = 2;
   char * str_data = new char[sizeD];
@@ -81,14 +82,15 @@ size_t rizatdinov::handleInput(unsigned ** num_array, char ** str_array)
     delete[] num_data;
     delete[] str_data;
 
-    return 0;
+    return 1;
   }
 
   rizatdinov::extend(&str_data, sizeD, i);
   rizatdinov::extend(&num_data, sizeD, i);
 
+  size = i;
   *str_array = str_data;
   *num_array = num_data;
 
-  return i;
+  return 0;
 }
