@@ -43,7 +43,7 @@ char* extend(char *data, unsigned int &cap) {
   unsigned int nCap = cap * 2;
   try {
     char* newData = new char[nCap];
-    for (int i = 0; i < cap; i++) { 
+    for (int i = 0; i < cap; i++) {
       newData[i] = data[i];
     }
     delete[] data;
