@@ -27,11 +27,13 @@ int main()
     {
       if (std::cin.eof())
       {
+        std::cout << "";
         break;
       }
       else
       {
         std::cerr << "Cant read 1 of parameters" << '\n';
+        std::cout << "";
         delete[] ans;
         return 1;
       }
@@ -39,6 +41,7 @@ int main()
     if (!(std::cin >> ch))
     {
       std::cerr << "Cant read 1 of parameters" << '\n';
+      std::cout << "";
       delete[] ans;
       return 1;
     }
@@ -51,6 +54,7 @@ int main()
       if (!alisov::resize(ans, len, cap))
       {
         std::cerr << "Cant resize array" << '\n';
+        std::cout << "";
         delete[] ans;
         return 2;
       }
