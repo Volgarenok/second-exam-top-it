@@ -38,6 +38,9 @@ void readInput(CharTable & table)
     }
     ++table.counts[idx];
   }
+  if (!std::cin.eof()) {
+    std::cerr << "Input read error\n";
+  }
 }
 
 void printForward(const CharTable & table)
