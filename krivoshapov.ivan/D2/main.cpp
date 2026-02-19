@@ -77,38 +77,42 @@ namespace krivoshapov
   }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-  krivoshapov::DynArray arr;
-  unsigned int count;
-  char ch;
 
-  while (std::cin >> count)
+  bool reverse = false;
+  if (argc == 2)
   {
-    if (!(std::cin >> ch))
+    if (std::strcmp(argv[1], "reverse") == 0)
     {
-      krivoshapov::print_reverse(arr);
-      std::cerr << "Failed to read character\n";
+      reverse = true;
+    }
+    else
+    {
+      std::cerr << "Invalid argument\n";
       return 1;
     }
-    for (unsigned int i = 0; i < count; ++i)
-    {
-      if (!arr.push_back(ch))
-      {
-        std::cout << std::endl;
-        std::cerr << "Memory allocation failed\n";
-        return 2;
-      }
-    }
   }
-
-  if (!std::cin.eof() && std::cin.fail())
+  else if (argc > 2)
   {
-    krivoshapov::print_reverse(arr);
-    std::cerr << "Failed to read count\n";
+    std::cerr << "Too many arguments\n";
     return 1;
   }
 
-  krivoshapov::print_reverse(arr);
+  krivoshapov::DynArray arr;
+  char ch;
+
+  while (std::cin >> ch)
+  {
+    if (!arr.push_back(ch))
+    {
+
+      std::cout << std::endl;
+      std::cerr << "Memory allocation failed\n";
+      return 2;
+    }
+  }
+
+  krivoshapov::print_pairs(arr, reverse);
   return 0;
 }
