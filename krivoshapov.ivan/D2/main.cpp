@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 namespace krivoshapov
 {
@@ -38,11 +39,41 @@ namespace krivoshapov
     const char *get_data() const { return data; }
   };
 
-  void print_reverse(const DynArray &arr)
+  void print_pairs(const DynArray &arr, bool reverse)
   {
-    for (size_t i = arr.get_size(); i > 0; --i)
-      std::cout << arr.get_data()[i - 1];
-    std::cout << std::endl;
+    size_t n = arr.get_size();
+    if (n == 0)
+    {
+      std::cout << std::endl;
+      return;
+    }
+
+    if (!reverse)
+    {
+      size_t i = 0;
+      while (i < n)
+      {
+        char cur = arr.get_data()[i];
+        size_t count = 1;
+        while (i + count < n && arr.get_data()[i + count] == cur)
+          ++count;
+        std::cout << count << ' ' << cur << '\n';
+        i += count;
+      }
+    }
+    else
+    {
+      size_t i = n;
+      while (i > 0)
+      {
+        char cur = arr.get_data()[i - 1];
+        size_t count = 1;
+        while (i - count > 0 && arr.get_data()[i - count - 1] == cur)
+          ++count;
+        std::cout << count << ' ' << cur << '\n';
+        i -= count;
+      }
+    }
   }
 }
 
