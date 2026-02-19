@@ -27,6 +27,15 @@ int main()
     while (std::cin >> size) {
       if (!(std::cin >> c)) {
         std::cerr << "Invalid argument.\n";
+        if (size_seqv > 0) {
+          for (size_t i = size_seqv; i > 0; --i) {
+            size_t idx = i - 1;
+            for (int j = lens[idx] - 1; j >= 0; --j) {
+              std::cout << seqv[idx][j];
+            }
+          }
+        }
+        std::cout << "\n";
         for (size_t i = 0; i < size_seqv; ++i) {
           delete[] seqv[i];
         }
