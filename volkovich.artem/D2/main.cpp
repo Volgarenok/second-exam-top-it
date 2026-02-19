@@ -9,11 +9,20 @@ int main(int argc, char *argv[])
     return 1;
   }
   char symb;
-
-  char *symbs = new char[1];
+  char *symbs = nullptr;
   char *tmp_symbs = nullptr;
-  size_t *symbs_size = new size_t[1];
+  size_t *symbs_size = nullptr;
   size_t *tmp_symbs_size = nullptr;
+  try {
+    symbs = new char[1];
+    symbs_size = new size_t[1];
+  } catch (...) {
+    delete[] symbs;
+    delete[] symbs_size;
+    std::cerr<<"Bad alloc";
+    std::cout<<"\n";
+    return 2;
+  }
   size_t all_count = 1;
   if (std::cin >> symb) {
     symbs[0] = symb;
