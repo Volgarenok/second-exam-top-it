@@ -1,5 +1,20 @@
 #include <iostream>
 
+namespace lachugin
+{
+  void expendArr(char*** arrs, size_t& oldCap)
+  {
+    size_t newCap = (oldCap == 0) ? 2 : oldCap * 2;
+    char** newArr = new char* [newCap];
+    for (size_t i = 0; i < oldCap; ++i) {
+      newArr[i] = (*arrs)[i];
+    }
+    delete[] (*arrs);
+    *arrs = newArr;
+    oldCap = newCap;
+  }
+}
+
 int main()
 {
   size_t n = 0;
