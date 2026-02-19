@@ -49,6 +49,7 @@ namespace lukashevich
         size_arr = new_size;
       }
     }
+    return true;
   }
 }
 int main()
