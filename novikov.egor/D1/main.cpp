@@ -27,13 +27,12 @@ int main()
     while (std::cin >> size) {
       if (!(std::cin >> c)) {
         std::cerr << "Invalid argument.\n";
-
         for (size_t i = 0; i < size_seqv; ++i) {
           delete[] seqv[i];
         }
         delete[] seqv;
         delete[] lens;
-
+        std::cout << "\n";
         return 1;
       }
 
@@ -66,7 +65,7 @@ int main()
       }
       delete[] seqv;
       delete[] lens;
-
+      std::cout << "\n";
       return 1;
     }
 
@@ -97,6 +96,7 @@ int main()
       delete[] seqv;
     }
     delete[] lens;
+    std::cout << "\n";
     return 2;
   }
 }
