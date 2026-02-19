@@ -2,6 +2,7 @@
 
 namespace novikov {
   void extend(char ** seq, size_t capacity, size_t newCapacity);
+  void destroy(char ** seq);
 }
 
 int main()
@@ -17,4 +18,10 @@ void novikov::extend(char ** seq, size_t capacity, size_t newCapacity)
   }
   delete [] (*seq);
   *seq = newSeq;
+}
+
+void novikov::destroy(char ** seq)
+{
+  delete [] (*seq);
+  *seq = nullptr;
 }
