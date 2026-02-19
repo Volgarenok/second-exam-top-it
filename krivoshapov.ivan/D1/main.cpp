@@ -33,8 +33,47 @@ namespace krivoshapov
       data[size++] = c;
       return true;
     }
-  }
+
+    size_t get_size() const { return size; }
+    const char *get_data() const { return data; }
+  };
 }
+
 int main()
 {
+  krivoshapov::DynArray arr;
+  unsigned int count;
+  char ch;
+
+  while (std::cin >> count)
+  {
+    if (!(std::cin >> ch))
+    {
+      std::cerr << "Failed to read character\n";
+      return 1;
+    }
+    for (unsigned int i = 0; i < count; ++i)
+    {
+      if (!arr.push_back(ch))
+      {
+        std::cout << std::endl;
+        std::cerr << "Memory allocation failed\n";
+        return 2;
+      }
+    }
+  }
+
+  if (!std::cin.eof() && std::cin.fail())
+  {
+    std::cerr << "Failed to read count\n";
+    return 1;
+  }
+
+  for (size_t i = arr.get_size(); i > 0; --i)
+  {
+    std::cout << arr.get_data()[i - 1];
+  }
+  std::cout << std::endl;
+
+  return 0;
 }
