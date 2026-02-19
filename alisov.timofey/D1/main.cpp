@@ -1,16 +1,21 @@
 #include <iostream>
 namespace alisov
 {
-  bool resize(char *&ans, size_t &len, size_t &cap)
+  bool resize(char *&ans, size_t &len, size_t &cap, size_t k)
   {
-    char *new_ans = new char[cap * 2];
+    size_t new_cap = cap * 2;
+    if (new_cap < len + k)
+    {
+      new_cap = len + k;
+    }
+    char *new_ans = new char[new_cap];
     for (size_t i = 0; i < len; ++i)
     {
       new_ans[i] = ans[i];
     }
     delete[] ans;
     ans = new_ans;
-    cap *= 2;
+    cap = new_cap;
     return true;
   }
 }
@@ -37,21 +42,14 @@ int main()
     {
       if (std::cin.eof())
       {
-        std::cout << "";
         break;
       }
-      else
-      {
-        std::cerr << "Cant read 1 of parameters" << '\n';
-        std::cout << "";
-        delete[] ans;
-        return 1;
-      }
+      delete[] ans;
+      return 1;
     }
     if (!(std::cin >> ch))
     {
       std::cerr << "Cant read 1 of parameters" << '\n';
-      std::cout << "";
       delete[] ans;
       return 1;
     }
@@ -61,10 +59,9 @@ int main()
     }
     if (len + k > cap)
     {
-      if (!alisov::resize(ans, len, cap))
+      if (!alisov::resize(ans, len, cap, k))
       {
         std::cerr << "Cant resize array" << '\n';
-        std::cout << "";
         delete[] ans;
         return 2;
       }
