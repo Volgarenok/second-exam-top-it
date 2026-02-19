@@ -1,4 +1,4 @@
-#include "sequence.cpp"
+#include "encode.hpp"
 #include <cstring>
 int musorin::parseArgs(const int argc, char* argv[], bool& reverse)
 {
