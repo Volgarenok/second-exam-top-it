@@ -6,7 +6,6 @@ int main() {
   char* a = nullptr;
   size_t size = 0;
   size_t cap = 0;
-  
   while (std::cin >> n >> ch) {
       if (size + n > cap) {
         size_t newCap = 0;
@@ -15,11 +14,9 @@ int main() {
         } else {
           newCap = cap;
         }
-        
         while (newCap < size + n) {
           newCap *= 2;
         }
-        
         char* b = nullptr;
         try {
           b = new char[newCap];
@@ -28,7 +25,6 @@ int main() {
           delete[] a;
           return 2;
         }
-        
         for (size_t i = 0; i < size; ++i) {
           b[i] = a[i];
         }
