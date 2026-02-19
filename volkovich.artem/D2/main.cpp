@@ -6,7 +6,6 @@ int main(int argc, char *argv[])
   if (argc > 2 || (argc == 2 && strcmp(argv[1], "reverse") != 0))
   {
     std::cerr << "Invalid args";
-    std::cout<<"\n";
     return 1;
   }
   char symb;
@@ -21,8 +20,8 @@ int main(int argc, char *argv[])
   }
   catch (...)
   {
-    delete[] symbs;
-    delete[] symbs_size;
+    // delete[] symbs;
+    // delete[] symbs_size;
     std::cerr << "Bad alloc";
     std::cout << "\n";
     return 2;
