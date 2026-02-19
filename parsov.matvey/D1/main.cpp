@@ -86,7 +86,7 @@ int main()
   }
 
   parsov::reverseSequence(seq, seqSize);
-  
+
   for (std::size_t i = 0; i < seqSize; ++i)
   {
     std::cout << seq[i];
