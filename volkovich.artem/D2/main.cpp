@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
 {
   if (argc > 2 || (argc == 2 && strcmp(argv[1], "reverse") != 0))
   {
-    std::cout << "Invalid args";
+    std::cerr << "Invalid args";
+    std::cout<<"\n";
     return 1;
   }
   char symb;
@@ -13,23 +14,28 @@ int main(int argc, char *argv[])
   char *tmp_symbs = nullptr;
   size_t *symbs_size = nullptr;
   size_t *tmp_symbs_size = nullptr;
-  try {
+  try
+  {
     symbs = new char[1];
     symbs_size = new size_t[1];
-  } catch (...) {
+  }
+  catch (...)
+  {
     delete[] symbs;
     delete[] symbs_size;
-    std::cerr<<"Bad alloc";
-    std::cout<<"\n";
+    std::cerr << "Bad alloc";
+    std::cout << "\n";
     return 2;
   }
   size_t all_count = 1;
-  if (std::cin >> symb) {
+  if (std::cin >> symb)
+  {
     symbs[0] = symb;
-  } else {
+  }
+  else
+  {
     std::cout << '\n';
     return 0;
-
   }
 
   symbs_size[0] = 1;
@@ -87,7 +93,6 @@ int main(int argc, char *argv[])
       std::cout << symbs_size[i] << ' ' << symbs[i] << '\n';
     }
   }
-  std::cout << '\n';
   delete[] symbs;
   delete[] symbs_size;
   return 0;
