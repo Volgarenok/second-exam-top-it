@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cstddef>
+#include <utility>
+#include <new>
 
 namespace parsov
 {
@@ -16,12 +19,12 @@ namespace parsov
     return str1[i] == str2[i];
   }
 
-  char* extend(const char* oldArray, std::size_t oldSize, char symbol)
+  std::pair<unsigned int, char>* extend(const std::pair<unsigned int, char>* oldArray, std::size_t oldSize, const std::pair<unsigned int, char>& newPair)
   {
-    char* newArray = nullptr;
+    std::pair<unsigned int, char>* newArray = nullptr;
     try
     {
-      newArray = new char[oldSize + 1];
+      newArray = new std::pair<unsigned int, char>[oldSize + 1];
     }
     catch (const std::bad_alloc&)
     {
@@ -31,31 +34,8 @@ namespace parsov
     {
       newArray[i] = oldArray[i];
     }
-    newArray[oldSize] = symbol;
+    newArray[oldSize] = newPair;
     return newArray;
-  }
-
-  void reverseSequence(char* seq, std::size_t size)
-  {
-    if (size == 0)
-    {
-      return;
-    }
-    std::size_t left = 0;
-    std::size_t right = size - 1;
-    while (left < right)
-    {
-      const char temp = seq[left];
-      seq[left] = seq[right];
-      seq[right] = temp;
-      left = left + 1;
-      right = right - 1;
-    }
-  }
-
-  void cleanup(char* seq)
-  {
-    delete[] seq;
   }
 }
 
@@ -81,9 +61,51 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  char* seq = nullptr;
-  std::size_t seqSize = 0;
+  std::pair<unsigned int, char>* pairs = nullptr;
+  std::size_t pairsSize = 0;
 
-  parsov::cleanup(seq);
+  char symbol = '\0';
+  if (std::cin >> symbol)
+  {
+    char currentChar = symbol;
+    unsigned int currentCount = 1;
+
+    while (std::cin >> symbol)
+    {
+      if (symbol == currentChar)
+      {
+        currentCount = currentCount + 1;
+      }
+      else
+      {
+        std::pair<unsigned int, char>* newPairs = parsov::extend(pairs, pairsSize, std::pair<unsigned int, char>(currentCount, currentChar));
+        if (!newPairs)
+        {
+          std::cerr << "failed to allocate memory\n";
+          delete[] pairs;
+          return 2;
+        }
+        delete[] pairs;
+        pairs = newPairs;
+        pairsSize = pairsSize + 1;
+
+        currentChar = symbol;
+        currentCount = 1;
+      }
+    }
+
+    std::pair<unsigned int, char>* newPairs = parsov::extend(pairs, pairsSize, std::pair<unsigned int, char>(currentCount, currentChar));
+    if (!newPairs)
+    {
+      std::cerr << "failed to allocate memory\n";
+      delete[] pairs;
+      return 2;
+    }
+    delete[] pairs;
+    pairs = newPairs;
+    pairsSize = pairsSize + 1;
+  }
+
+  delete[] pairs;
   return 0;
 }
