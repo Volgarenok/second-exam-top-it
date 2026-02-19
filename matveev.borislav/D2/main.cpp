@@ -44,11 +44,25 @@ int main(int argc, char* argv[])
   char c;
   while (std::cin.get(c))
   {
+    if (std::cin.bad())
+    {
+      delete[] data;
+      delete[] counts;
+      std::cerr << "input error\n";
+      return 1;
+    }
+
     if (std::isspace(static_cast<unsigned char>(c)))
     {
       continue;
     }
-
+    if (std::isdigit(static_cast<unsigned char>(c)))
+    {
+      delete[] data;
+      delete[] counts;
+      std::cerr << "input error\n";
+      return 1;
+    }
     if (!now_has)
     {
       now = c;
