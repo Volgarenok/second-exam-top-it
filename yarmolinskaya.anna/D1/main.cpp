@@ -4,7 +4,6 @@
 int main()
 {
   yarmolinskaya::sequence_t seq = yarmolinskaya::createSequence();
-  bool memError = false;
 
   while (true) {
     unsigned int count = 0;
@@ -17,22 +16,20 @@ int main()
       break;
     }
     if (!ok) {
-      std::cerr << "Error: failed to read a pair\n";
+      yarmolinskaya::printReversed(seq);
       yarmolinskaya::destroySequence(seq);
+      std::cerr << "Error: failed to read a pair\n";
       return 1;
     }
     if (!yarmolinskaya::appendChars(seq, ch, count)) {
+      yarmolinskaya::printReversed(seq);
+      yarmolinskaya::destroySequence(seq);
       std::cerr << "Error: memory allocation failed\n";
-      memError = true;
-      break;
+      return 2;
     }
   }
 
   yarmolinskaya::printReversed(seq);
   yarmolinskaya::destroySequence(seq);
-
-  if (memError) {
-    return 2;
-  }
   return 0;
 }
