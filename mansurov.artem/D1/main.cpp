@@ -39,7 +39,11 @@ int main(){
       count++;
     }
     size_t count_chars = 0;
-    char* strs = in_string(numbers, symbols, count, count_chars);
+    char* str = in_string(numbers, symbols, count, count_chars);
+    for(size_t i = 0; i < count_chars; i++){
+      std::cout << str[count_chars-1-i];
+    }
+    std::cout << "\n";
   }
   catch(const std::bad_alloc & e){
     std::cerr << "bad alloc" << e.what() << std::endl;
@@ -85,11 +89,3 @@ char* mansurov::in_string(const size_t* numbers,const char* symbols, size_t n, s
 }
 
 
-void mansurov::flip(char** symbols, size_t n){
-  char* new_symbols = new char[n];
-  for(size_t i = 0; i < n; i++){
-    new_symbols[n-i-1] = *symbols[i];
-  }
-  delete[] (*symbols);
-  *symbols = new_symbols;
-}
