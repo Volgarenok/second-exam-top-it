@@ -13,12 +13,10 @@ int main(){
   size_t* numbers = nullptr;
   char* symbols = nullptr;
   size_t count = 0;
-  
   try{
     while(std::cin){
       int tmp_num = 0;
       std::cin >> tmp_num;
-      
       if(!std::cin){
         if(std::cin.eof()){
           break;
@@ -26,15 +24,12 @@ int main(){
         std::cerr << "input error" << "\n";
         return 1;
       }
-      
       if(tmp_num < 0){
         std::cerr << "negative numbers" << "\n";
         return 1;
       }
-      
       char tmp_char = ' ';
       std::cin >> tmp_char;
-      
       if(!std::cin){
         if(std::cin.eof()){
           break;
@@ -42,20 +37,20 @@ int main(){
         std::cerr << "input error" << "\n";
         return 1;
       }
-      
+
       extend(&numbers, count, static_cast<size_t>(tmp_num));
       extend(&symbols, count, tmp_char);
       count++;
     }
-    
+
     size_t count_chars = 0;
     char* str = in_string(numbers, symbols, count, count_chars);
-    
+
     for(size_t i = 0; i < count_chars; i++){
       std::cout << str[count_chars - 1 - i];
     }
     std::cout << "\n";
-    
+
     delete[] str;
     delete[] numbers;
     delete[] symbols;
@@ -66,7 +61,7 @@ int main(){
     delete[] symbols;
     return 2;
   }
-  
+
   return 0;
 }
 
@@ -97,9 +92,9 @@ char* mansurov::in_string(const size_t* numbers, const char* symbols, size_t n, 
   for(size_t i = 0; i < n; i++){
     count += numbers[i];
   }
-  
+
   char* new_str = new char[count + 1];
-  
+
   size_t c = 0;
   for(size_t i = 0; i < n; i++){
     for(size_t k = 0; k < numbers[i]; k++){
@@ -107,8 +102,8 @@ char* mansurov::in_string(const size_t* numbers, const char* symbols, size_t n, 
       c++;
     }
   }
-  
+
   new_str[count] = '\0';
-  
+
   return new_str;
 }
