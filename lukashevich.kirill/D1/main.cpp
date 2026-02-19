@@ -48,6 +48,8 @@ namespace lukashevich
         pair_arr = new_arr;
         size_arr = new_size;
       }
+      pair_arr[count_pair] = pair;
+      ++count_pair;
     }
     return true;
   }
@@ -60,16 +62,18 @@ namespace lukashevich
       total_len += pairs[i].count;
     }
 
-    char* seq = new char [total_len];
+    char* seq = new char [total_len + 1];
 
     size_t pos = 0;
     for (size_t i = 0; i < count_pairs; ++i)
     {
       for (size_t k = 0; k < pairs[i].count; ++k)
       {
-        seq[++pos] = pairs[i].symbol;
+        seq[pos++] = pairs[i].symbol;
       }
     }
+    seq[total_len] = '\0';
+
     return seq;
   }
 
@@ -114,7 +118,7 @@ namespace lukashevich
     delete [] pairs;
 
     print_seq(seq, seq_len);
-    
+
     delete [] seq;
 
     return 0;
@@ -124,5 +128,5 @@ namespace lukashevich
 
 int main()
 {
-  return 0;
+  return lukashevich::proc();
 }
