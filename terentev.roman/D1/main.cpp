@@ -4,11 +4,22 @@ int main() {
   size_t n = 0;
   char ch;
   char* a = nullptr;
-  size_t size = 0;
+  size_t size = 0
   size_t cap = 0;
-  while (std::cin >> n >> ch) {
+  bool ok = true
+  bool done = false;
+  while (ok && !done) {
+    if (!(std::cin >> n)) {
+      if (std::cin.eof()) {
+        done = true;
+      } else {
+        ok = false;
+      }
+    } else if (!(std::cin >> ch)) {
+      ok = false;
+    } else {
       if (size + n > cap) {
-        size_t newCap = 0;
+        size_t newCap;
         if (cap == 0) {
           newCap = 1;
         } else {
@@ -35,15 +46,19 @@ int main() {
       for (size_t i = 0; i < n; ++i) {
         a[size++] = ch;
       }
+    }
   }
-  if (!std::cin.eof()) {
+  if (!ok) {
     std::cerr << "Input error\n";
+    for (size_t i = size; i > 0; --i) {
+      std::cout << a[i - 1];
+    }
     std::cout << '\n';
     delete[] a;
     return 1;
   }
   for (size_t i = size; i > 0; --i) {
-    std::cout << a[i-1];
+    std::cout << a[i - 1];
   }
   std::cout << '\n';
   delete[] a;
