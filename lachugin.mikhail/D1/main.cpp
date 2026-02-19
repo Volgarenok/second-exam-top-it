@@ -24,7 +24,7 @@ namespace lachugin
     oldCap = newCap;
   }
 
-  void expendLongs(size_t** longs, size_t& oldSize)
+  void expendLongs(size_t** longs, size_t oldSize)
   {
     size_t newSize = (oldSize == 0) ? 2 : oldSize * 2;
     size_t *newLongs = new size_t [newSize];
@@ -33,7 +33,6 @@ namespace lachugin
     }
     delete[] *longs;
     *longs = newLongs;
-    oldSize = newSize;
   }
 }
 
@@ -85,11 +84,12 @@ int main()
     return 1;
   }
 
-  for (size_t i = k - 1; i > 0; --i)
+  for (size_t i = k; i > 0; --i)
   {
-    for (size_t j = longs[i] - 1; j > 0; --j)
+    size_t idx = i - 1;
+    for (size_t j = longs[idx]; j > 0; --j)
     {
-      std::cout << arrs[i][j];
+      std::cout << arrs[idx][j - 1];
     }
   }
   lachugin::freeArrs(arrs, k);
