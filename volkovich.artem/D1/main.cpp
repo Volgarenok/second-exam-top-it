@@ -15,8 +15,6 @@ int main()
     if (!(std::cin >> symb)) {
       delete[] symbs;
       delete[] all_counts;
-      delete[] tmp_symbs;
-      delete[] tmp_counts;
       std::cerr<<"Bad input";
       std::cout<<"\n";
       return 2;
