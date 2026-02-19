@@ -17,7 +17,7 @@ namespace alisov
 int main()
 {
   char *ans = nullptr;
-  size_t len = 0, cap = 0;
+  size_t len = 0, cap = 1;
   size_t k;
   char ch;
 
@@ -46,7 +46,7 @@ int main()
     {
       continue;
     }
-    if (len + k >= cap)
+    if (len + k > cap)
     {
       if (!alisov::resize(ans, len, cap))
       {
