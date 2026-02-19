@@ -42,7 +42,7 @@ int main()
     if (size + number > cap){
       size_t newCap = cap + number + 10;
       try{
-        r = karpenkov::expand(r, size, newCap);
+        char * newArr = karpenkov::expand(r, size, newCap);
         cap = newCap;
       }
       catch(...){
@@ -51,6 +51,8 @@ int main()
         std::cout << '\n';
         return 2;
       }
+      delete [] r;
+      r = newArr;
     }
     r = karpenkov::addNewLetters(r, size, number, letter);
   }
@@ -71,7 +73,7 @@ int main()
   }
   if (size < cap){
     try{
-      r = karpenkov::cut(r, size);
+      char * newArr = karpenkov::cut(r, size);
     }
     catch(...){
       std::cerr << "bad_alloc " << '\n';
@@ -79,6 +81,8 @@ int main()
       std::cout << '\n';
       return 2;
     }
+    delete [] r;
+    r = newArr;
   }
   karpenkov::reverseLetters(r, size);
   if (inputError){
