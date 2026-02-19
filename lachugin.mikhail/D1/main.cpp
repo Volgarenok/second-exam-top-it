@@ -91,6 +91,7 @@ int main()
   if (!std::cin.eof() && !std::cin)
   {
     lachugin::printReversed(arrs, longs, k);
+    std::cout << "\n";
     std::cerr << "Error: invalid input\n";
     lachugin::freeArrs(arrs, k);
     delete[] longs;
