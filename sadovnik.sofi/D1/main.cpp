@@ -1,4 +1,4 @@
-#include <iostream>
+k#include <iostream>
 #include <new>
 
 namespace sadovnik {
@@ -80,7 +80,7 @@ private:
   std::size_t capacity_;
 };
 
-} // namespace sadovnik
+}
 
 int main()
 {
@@ -118,3 +118,4 @@ int main()
 
   return 0;
 }
+
