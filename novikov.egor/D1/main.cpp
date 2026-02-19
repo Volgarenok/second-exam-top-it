@@ -40,6 +40,16 @@ namespace novikov
     delete[] lens;
     return new_lens;
   }
+  int* cut(int* lens, size_t s)
+  {
+    int* new_lens = new int[s];
+    for(size_t i =0; i<s; ++i)
+    {
+      new_lens[i] - lens[i];
+    }
+    delete[] lens;
+    return new_lens;
+  }
 
 }
 
@@ -92,6 +102,13 @@ int main()
   catch(std::bad_alloc)
   {
     std::cerr<<"Bad alloc.\n";
+    delete[] lens;
+    for(size_t i = 0; i<cap_seqv; ++i)
+    {
+      delete[] seqv[i];
+    }
+    delete[] seqv;
     return 2;
   }
+  
 }
