@@ -1,6 +1,5 @@
 #include <iostream>
 #include <new>
-
 int main()
 {
   unsigned int b;
@@ -14,6 +13,10 @@ int main()
   {
     if (!(std::cin >> b))
     {
+      if (!std::cin.eof())
+      {
+        input_error = true;
+      }
       break;
     }
     if (!(std::cin >> a))
