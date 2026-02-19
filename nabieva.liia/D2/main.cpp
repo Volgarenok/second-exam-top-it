@@ -10,6 +10,7 @@ namespace nabieva
   };
   PairCountSymbol* addNewPair(const PairCountSymbol* a, size_t countPair, size_t num, char symb);
   void printPairs(const PairCountSymbol* pairs, size_t countPair);
+  void reversePrintPairs(const PairCountSymbol* pairs, size_t countPair);
 }
 
 int main(int argc, char* argv[])
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < countPair; i++) {
       if (pairs[i].symbol == symb) {
         pairs[i].count++;
-        findSymb == true;
+        findSymb = true;
         break;
       }
     }
