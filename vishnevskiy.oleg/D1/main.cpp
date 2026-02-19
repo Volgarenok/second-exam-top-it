@@ -36,9 +36,9 @@ int main()
   }
   if (std::cin.eof())
   {
-    for (size_t i = 0; i < s; i++)
+    for (size_t i = 0; i <= s; i++)
     {
-      std::cout << seq[i];
+      std::cout << seq[s-i];
     }
     std::cout << "\n";
     return 0;
