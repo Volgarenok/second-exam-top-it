@@ -14,7 +14,7 @@ int main(){
   size_t count = 0;
   try{
     while(std::cin){
-      size_t tmp_num = 0;
+      int tmp_num = 0;
       std::cin >> tmp_num;
       if(!std::cin){
         if(std::cin.eof()){
@@ -53,7 +53,7 @@ int main(){
   }
   catch(const std::bad_alloc & e){
     std::cerr << "bad alloc" << e.what() << std::endl;
-    return 1;
+    return 2;
   }
 }
 
