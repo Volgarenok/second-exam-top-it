@@ -26,6 +26,20 @@ namespace novikov
     delete[] seqv;
     return new_seqv;
   }
+  int* extend(int* lens, size_t s, size_t k)
+  {
+    int* new_lens = new int[k];
+    for(size_t i =0; i<s; ++i)
+    {
+      new_lens[i] = lens[i];
+    }
+    for(size_t i = s; i<k; ++i)
+    {
+      new_lens[i] = 0;
+    }
+    delete[] lens;
+    return new_lens;
+  }
 
 }
 
@@ -37,6 +51,7 @@ int main()
   char* seq;
   size_t size_seqv = 0;
   size_t cap_seqv = 3;
+  int* lens = new int[cap_seqv];
   char** seqv = new char*[cap_seqv];
   try
   {
@@ -44,7 +59,8 @@ int main()
     { 
       if(std::cin>>size)
       {
-      char* ceq = new char[size]; 
+        lens[size_seqv] = size;
+        char* ceq = new char[size]; 
       }
       else
       {
@@ -65,6 +81,7 @@ int main()
       }
       if(size_seqv == cap_seqv)
       {
+        lens = novikov::extend(lens, cap_seqv, size_seqv+3);
         seqv = novikov::extend(seqv, cap_seqv, size_seqv+3);
         cap_seqv += 3;
       }
