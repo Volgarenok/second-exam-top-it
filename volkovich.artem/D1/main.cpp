@@ -12,12 +12,20 @@ int main()
   char *symbs = nullptr;
   while (std::cin >> symb_count)
   {
-    if (!(std::cin >> symb)) {
+    if (!(std::cin >> symb))
+    {
+      for (size_t i = symbs_len; i-- > 0;)
+      {
+        for (size_t j = 0; j < all_counts[i]; j++)
+        {
+          std::cout << symbs[i];
+        }
+      }
       delete[] symbs;
       delete[] all_counts;
-      std::cerr<<"Bad input";
-      std::cout<<"\n";
-      return 2;
+      std::cerr << "Bad input";
+      std::cout << "\n";
+      return 1;
     }
     try
     {
@@ -41,18 +49,19 @@ int main()
       delete[] all_counts;
       delete[] tmp_symbs;
       delete[] tmp_counts;
-      std::cerr<< "Bad alloc";
-      std::cout<<"\n";
+      std::cerr << "Bad alloc";
+      std::cout << "\n";
       return 2;
     }
     symbs_len++;
   }
-  if (!std::cin.eof()) {
-    std::cerr<<"Bad input";
-    std::cout<<"\n";
-    return 2;
+  if (!std::cin.eof())
+  {
+    std::cerr << "Bad input";
+    std::cout << "\n";
+    return 1;
   }
-  for (size_t i = symbs_len; i-->0; )
+  for (size_t i = symbs_len; i-- > 0;)
   {
     for (size_t j = 0; j < all_counts[i]; j++)
     {
