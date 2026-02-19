@@ -1,9 +1,15 @@
 #include "io.hpp"
+
 #include <iostream>
 
 namespace yarmolinskaya {
 
-bool yarmolinskaya::readSequence(sequence_t &seq)
+static void printPair(char ch, std::size_t count)
+{
+  std::cout << count << ' ' << ch << '\n';
+}
+
+bool readSequence(sequence_t &seq)
 {
   char ch = '\0';
   while (std::cin.get(ch)) {
@@ -17,12 +23,7 @@ bool yarmolinskaya::readSequence(sequence_t &seq)
   return true;
 }
 
-static void printPair(char ch, std::size_t count)
-{
-  std::cout << count << ' ' << ch << '\n';
-}
-
-void yarmolinskaya::printPairs(const sequence_t &seq, bool reverse)
+void printPairs(const sequence_t &seq, bool reverse)
 {
   if (seq.size == 0) {
     std::cout << '\n';
