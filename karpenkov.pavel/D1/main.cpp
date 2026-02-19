@@ -85,6 +85,7 @@ int main()
   karpenkov::reverseLetters(r, size);
   if (inputError){
     std::cerr << "input error" << '\n';
+    std::cout << '\n';
     return 1;
   }
   return 0;
