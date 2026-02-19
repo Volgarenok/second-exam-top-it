@@ -61,8 +61,8 @@ int main()
     try{
       r = karpenkov::cut(r, size);
     }
-    catch(std::bad_alloc){
-      std::cerr << "bad_alloc" << '\n';
+    catch(std::bad_alloc & e){
+      std::cerr << "bad_alloc " << e.what () << '\n';
       delete [] r;
     }
   }
