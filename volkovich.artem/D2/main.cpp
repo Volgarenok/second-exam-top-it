@@ -20,8 +20,6 @@ int main(int argc, char *argv[])
   }
   catch (...)
   {
-    // delete[] symbs;
-    // delete[] symbs_size;
     std::cerr << "Bad alloc";
     std::cout << "\n";
     return 2;
