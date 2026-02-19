@@ -5,8 +5,8 @@ namespace mansurov{
   void extend(size_t** numbers,size_t count, size_t new_num);
   void extend(char** chars,size_t count, char new_char);
   char* in_string(const size_t* numbers,const char* symbols, size_t n, size_t& count);
-  void flip(char** symbols, size_t n);
 }
+
 int main(){
   using namespace mansurov;
   size_t* numbers = nullptr;
@@ -23,7 +23,13 @@ int main(){
         return 1;
       }
       else{
-        extend(&numbers,count, tmp_num);          
+        if(tmp_num >= 0){
+          extend(&numbers,count, tmp_num);
+        }
+        else{
+          std::cerr << "negative numbers" << "\n";
+          return 1;
+        }
       }
       char tmp_char = ' ';
       std::cin >> tmp_char;
