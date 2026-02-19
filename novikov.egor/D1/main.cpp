@@ -35,7 +35,6 @@ int main()
             }
           }
         }
-        std::cout << "\n";
         for (size_t i = 0; i < size_seqv; ++i) {
           delete[] seqv[i];
         }
