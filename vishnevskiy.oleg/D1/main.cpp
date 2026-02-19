@@ -14,7 +14,7 @@ int main()
     }
     catch (...)
     {
-      delete[] seq;
+      delete[] tmpseq;
       return 2;
     }
     for (size_t i = 0; i < s; i++)
