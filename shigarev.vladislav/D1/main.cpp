@@ -26,10 +26,10 @@ namespace shigarev
 
     ~PairArray()
     {
-      delete[] data_;
+      delete [] data_;
     }
 
-    const pair_t & operator[](std::size_t i) const
+    const pair_t & operator [](std::size_t i) const
     {
       return data_[i];
     }
@@ -39,14 +39,16 @@ namespace shigarev
       return size_;
     }
 
-    void append(const unsigned int count, const char ch)
+    void append(unsigned int count, char ch)
     {
-      pair_t * grown = new pair_t[size_ + 1];
-      for (std::size_t i = 0; i < size_; ++i) {
+      pair_t * grown = new pair_t [size_ + 1];
+      for (std::size_t i = 0; i < size_; ++i)
+      {
         grown[i] = data_[i];
       }
-      grown[size_] = {count, ch};
-      delete[] data_;
+      grown[size_].count_ = count;
+      grown[size_].ch_ = ch;
+      delete [] data_;
       data_ = grown;
       ++size_;
     }
@@ -54,7 +56,8 @@ namespace shigarev
     std::size_t computeLength() const
     {
       std::size_t total = 0;
-      for (std::size_t i = 0; i < size_; ++i) {
+      for (std::size_t i = 0; i < size_; ++i)
+      {
         total += data_[i].count_;
       }
       return total;
@@ -70,11 +73,13 @@ namespace shigarev
   public:
     explicit CharSequence(const PairArray & pairs):
       length_(pairs.computeLength()),
-      data_(new char[length_])
+      data_(new char [length_])
     {
       std::size_t pos = 0;
-      for (std::size_t i = 0; i < pairs.getSize(); ++i) {
-        for (unsigned int j = 0; j < pairs[i].count_; ++j) {
+      for (std::size_t i = 0; i < pairs.getSize(); ++i)
+      {
+        for (unsigned int j = 0; j < pairs[i].count_; ++j)
+        {
           data_[pos] = pairs[i].ch_;
           ++pos;
         }
@@ -83,7 +88,7 @@ namespace shigarev
 
     ~CharSequence()
     {
-      delete[] data_;
+      delete [] data_;
     }
 
     std::size_t getLength() const
@@ -93,7 +98,8 @@ namespace shigarev
 
     void printReverse() const
     {
-      for (std::size_t i = length_; i > 0; --i) {
+      for (std::size_t i = length_; i > 0; --i)
+      {
         std::cout << data_[i - 1];
       }
       std::cout << '\n';
@@ -111,29 +117,37 @@ int main()
   unsigned int count = 0;
   char ch = '\0';
 
-  while (std::cin.peek() != EOF) {
-    if (!shigarev::readPair(count, ch)) {
-      if (!std::cin.eof()) {
+  while (std::cin.peek() != EOF)
+  {
+    if (!shigarev::readPair(count, ch))
+    {
+      if (!std::cin.eof())
+      {
         std::cerr << "Error: failed to read a pair\n";
         return 1;
       }
       break;
     }
-    try {
+
+    try
+    {
       arr.append(count, ch);
-    } catch (const std::bad_alloc &) {
+    }
+    catch (const std::bad_alloc &)
+    {
       std::cerr << "Error: memory allocation failed\n";
-      std::cout << '\n';
       return 2;
     }
   }
 
-  try {
+  try
+  {
     const shigarev::CharSequence seq(arr);
     seq.printReverse();
-  } catch (const std::bad_alloc &) {
+  }
+  catch (const std::bad_alloc &)
+  {
     std::cerr << "Error: memory allocation failed\n";
-    std::cout << '\n';
     return 2;
   }
 
