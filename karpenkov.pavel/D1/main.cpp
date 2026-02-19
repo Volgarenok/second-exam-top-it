@@ -10,11 +10,16 @@ namespace karpenkov{
     arr = str;
     return arr;
   }
-  char * addNewLetters(char * arr, size_t size, size_t count, char letter){
+  char * addNewLetters(char * arr, size_t& size, size_t count, char letter){
     for (size_t i = 0; i < count; i++){
       arr[size++] = letter;
     }
     return arr;
+  }
+  void reverseLetters(char * arr, size_t size){
+    for(size_t i = size; i > 0; i--){
+      std::cout << arr[i - 1];
+    }
   }
 }
 
@@ -39,6 +44,6 @@ int main()
     else{
       r = karpenkov::addNewLetters(r, size, number, letter);
     }
-    size += number;
   }
+  karpenkov::reverseLetters(r, size);
 }
