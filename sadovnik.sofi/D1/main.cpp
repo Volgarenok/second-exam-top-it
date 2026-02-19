@@ -1,83 +1,131 @@
 #include <iostream>
-#include <memory>
 #include <new>
+#include <cstdlib>
 
-namespace sadovnik
-{
+namespace sadovnik {
 
-class CharBuffer
-{
+class CharArray {
 public:
-  void pushBack(char ch)
+  CharArray()
+    : data_(nullptr)
+    , size_(0)
+    , capacity_(0)
   {
-    constexpr std::size_t INITIAL_CAPACITY = 16;
-    constexpr std::size_t GROWTH_FACTOR = 2;
+  }
 
-    if (size_ == capacity_)
-    {
-      std::size_t new_capacity = (capacity_ == 0) ? INITIAL_CAPACITY
-                                                  : capacity_ * GROWTH_FACTOR;
-      auto new_data = std::make_unique<char[]>(new_capacity);
-      for (std::size_t i = 0; i < size_; ++i)
-      {
+  ~CharArray()
+  {
+    delete[] data_;
+  }
+
+  CharArray(const CharArray&) = delete;
+  CharArray& operator=(const CharArray&) = delete;
+
+  CharArray(CharArray&& other) noexcept
+    : data_(other.data_)
+    , size_(other.size_)
+    , capacity_(other.capacity_)
+  {
+    other.data_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
+  }
+
+  CharArray& operator=(CharArray&& other) noexcept
+  {
+    if (this != &other) {
+      delete[] data_;
+      data_ = other.data_;
+      size_ = other.size_;
+      capacity_ = other.capacity_;
+      other.data_ = nullptr;
+      other.size_ = 0;
+      other.capacity_ = 0;
+    }
+    return *this;
+  }
+
+  void push_back(char c)
+  {
+    if (size_ >= capacity_) {
+      const std::size_t new_cap = (capacity_ == 0) ? 4 : capacity_ * 2;
+      char* const new_data = new char[new_cap];
+      for (std::size_t i = 0; i < size_; ++i) {
         new_data[i] = data_[i];
       }
-      data_ = std::move(new_data);
-      capacity_ = new_capacity;
+      delete[] data_;
+      data_ = new_data;
+      capacity_ = new_cap;
     }
-    data_[size_++] = ch;
+    data_[size_++] = c;
   }
 
-  std::size_t size() const { return size_; }
-  const char* data() const { return data_.get(); }
+  char& operator[](std::size_t index)
+  {
+    return data_[index];
+  }
+
+  const char& operator[](std::size_t index) const
+  {
+    return data_[index];
+  }
+
+  std::size_t size() const
+  {
+    return size_;
+  }
 
 private:
-  std::unique_ptr<char[]> data_;
-  std::size_t size_ = 0;
-  std::size_t capacity_ = 0;
+  char* data_;
+  std::size_t size_;
+  std::size_t capacity_;
 };
 
-bool readAndBuild(CharBuffer& buffer)
-{
-  unsigned count;
-  char ch;
-  while (std::cin >> count >> ch)
-  {
-    for (unsigned i = 0; i < count; ++i)
-    {
-      buffer.pushBack(ch);
-    }
-  }
-  return std::cin.eof();
 }
 
+static void print_sequence(const sadovnik::CharArray& seq)
+{
+  for (std::size_t i = seq.size(); i > 0; --i) {
+    std::cout << seq[i - 1];
+  }
+  std::cout << '\n';
 }
 
 int main()
 {
-  sadovnik::CharBuffer buffer;
-  try
-  {
-    if (!sadovnik::readAndBuild(buffer))
-    {
-      std::cerr << "Input error\n";
+  using namespace sadovnik;
+
+  CharArray sequence;
+
+  while (true) {
+    unsigned int count;
+    if (!(std::cin >> count)) {
+      if (std::cin.eof()) {
+        break;
+      }
+      print_sequence(sequence);
+      std::cerr << "Invalid input format\n";
       return 1;
     }
-  }
-  catch (const std::bad_alloc&)
-  {
-    std::cerr << "Memory allocation failed\n";
-    std::cout << std::endl;
-    return 2;
-  }
 
-  if (buffer.size() > 0)
-  {
-    for (std::size_t i = buffer.size(); i > 0; --i)
-    {
-      std::cout << buffer.data()[i - 1];
+    char ch;
+    if (!(std::cin >> ch)) {
+      print_sequence(sequence);
+      std::cerr << "Invalid input format\n";
+      return 1;
+    }
+
+    try {
+      for (unsigned int i = 0; i < count; ++i) {
+        sequence.push_back(ch);
+      }
+    } catch (const std::bad_alloc&) {
+      print_sequence(sequence);
+      std::cerr << "Memory allocation failed\n";
+      return 2;
     }
   }
-  std::cout << std::endl;
+
+  print_sequence(sequence);
   return 0;
 }
