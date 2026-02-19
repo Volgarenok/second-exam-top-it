@@ -38,25 +38,43 @@ int main()
   size_t size_seqv = 0;
   size_t cap_seqv = 3;
   char** seqv = new char*[cap_seqv];
-  while(std::cin)
+  try
   {
-    if(std::cin>>size)
-    {
-      char* ceq = new char[size]; 
-    }
-    if(std::cin>>c)
-    {
-      for(size_t i = 0; i<size; ++i)
+    while(std::cin)
+    { 
+      if(std::cin>>size)
       {
-        seq[i] = c;
+      char* ceq = new char[size]; 
       }
-    }
-    seqv[size_seqv] = seq;
-    if(size_seqv == cap_seqv)
-    {
-      seqv = novikov::extend(seqv, cap_seqv, size_seqv+3);
-      size_seqv += 3;
+      else
+      {
+        std::cerr<<"Invalid argument.\n";
+        return 1;
+      }
+      if(std::cin>>c)
+      {
+        for(size_t i = 0; i<size; ++i)
+        {
+          seq[i] = c;
+        }
+      }
+      else
+      {
+        std::cerr<<"Invalid argument.\n";
+        return 1;
+      }
+      if(size_seqv == cap_seqv)
+      {
+        seqv = novikov::extend(seqv, cap_seqv, size_seqv+3);
+        cap_seqv += 3;
+      }
+      seqv[cap_seqv] = seq;
+      cap_seqv++;
     }
   }
-
+  catch(std::bad_alloc)
+  {
+    std::cerr<<"Bad alloc.\n";
+    return 2;
+  }
 }
