@@ -7,22 +7,13 @@ namespace smirnova {
 
 namespace {
 
-const int MAX_CHARS = 256;
+constexpr int MAX_CHARS = 256;
 
 struct CharTable {
   int counts[MAX_CHARS];
   char order[MAX_CHARS];
   int orderSize;
 };
-
-void initTable(CharTable & table)
-{
-  for (int i = 0; i < MAX_CHARS; ++i) {
-    table.counts[i] = 0;
-    table.order[i] = 0;
-  }
-  table.orderSize = 0;
-}
 
 bool isDelimiter(char ch)
 {
@@ -39,7 +30,7 @@ void recordChar(CharTable & table, char ch)
   ++table.counts[idx];
 }
 
-void readInput(CharTable & table)
+bool readInput(CharTable & table)
 {
   char ch = 0;
   while (std::cin.get(ch)) {
@@ -47,9 +38,7 @@ void readInput(CharTable & table)
       recordChar(table, ch);
     }
   }
-  if (!std::cin.eof()) {
-    std::cerr << "Input read error\n";
-  }
+  return std::cin.eof();
 }
 
 void printForward(const CharTable & table)
@@ -96,12 +85,14 @@ bool parseArgs(int argc, char const * const * argv, ParseResult & result)
   return false;
 }
 
-void processInput(bool reverse)
+bool processInput(bool reverse)
 {
-  CharTable table;
-  initTable(table);
-  readInput(table);
-  printTable(table, reverse);
+  CharTable table = {};
+  const bool ok = readInput(table);
+  if (ok) {
+    printTable(table, reverse);
+  }
+  return ok;
 }
 
 }

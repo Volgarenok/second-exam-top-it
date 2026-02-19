@@ -9,8 +9,8 @@ struct ParseResult {
 
 bool parseArgs(int argc, char const * const * argv, ParseResult & result);
 
-void processInput(bool reverse);
+bool processInput(bool reverse);
 
-} // namespace smirnova
+}
 
 #endif
