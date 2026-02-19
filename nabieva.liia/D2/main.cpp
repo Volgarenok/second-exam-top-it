@@ -52,6 +52,11 @@ int main(int argc, char* argv[])
       }
     }
   }
+  if (countPair == 0) {
+    std::cout << '\n';
+    delete[] pairs;
+    return 0;
+  }
   if (argc == 2 && (std::strcmp(argv[1], "reverse") == 0)) {
     nabieva::reversePrintPairs(pairs, countPair);
   }
