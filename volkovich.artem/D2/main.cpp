@@ -13,27 +13,25 @@ int main(int argc, char *argv[])
   char *tmp_symbs = nullptr;
   size_t *symbs_size = nullptr;
   size_t *tmp_symbs_size = nullptr;
-  try
-  {
-    symbs = new char[1];
-    symbs_size = new size_t[1];
-  }
-  catch (...)
-  {
-    std::cerr << "Bad alloc";
-    std::cout << "\n";
-    return 2;
-  }
-  size_t all_count = 1;
-  if (std::cin >> symb)
-  {
-    symbs[0] = symb;
-  }
-  else
+  if (std::cin >> symb) {
+    try
+    {
+      symbs = new char[1];
+      symbs_size = new size_t[1];
+      symbs[0] = symb
+    }
+    catch (...)
+    {
+      std::cerr << "Bad alloc";
+      std::cout << "\n";
+      return 2;
+    }
+  } else
   {
     std::cout << '\n';
     return 0;
   }
+  size_t all_count = 1;
 
   symbs_size[0] = 1;
 
