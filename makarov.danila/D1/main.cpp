@@ -33,7 +33,7 @@ int main() {
 }
 
 char* extand(char *data, unsigned int cap) {
-  unsigned int nCap = cap * 2; 
+  unsigned int nCap = cap * 2;
   try {
   char* newData = new char[nCap];
   for (int i = 0; i < Cap; i++) {
