@@ -124,6 +124,7 @@ int main()
     return 1;
   }
 
+
   lachugin::printReversed(arrs, longs, k);
   lachugin::freeArrs(arrs, k);
   delete[] longs;
