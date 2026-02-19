@@ -8,25 +8,31 @@ int main()
   std::size_t sum = 0;
   char* data = nullptr;
   std::size_t cap = 0;
+  bool input_error = false;
 
-  while (std::cin >> b >> a)
+  while (true)
   {
+    if (!(std::cin >> b))
+    {
+      break;
+    }
+    if (!(std::cin >> a))
+    {
+      input_error = true;
+      break;
+    }
     if (b == 0)
     {
       continue;
     }
-
     if (sum + b > cap)
     {
       std::size_t new_cap = (cap == 0) ? 1 : cap;
-
       while (new_cap < sum + b)
       {
         new_cap *= 2;
       }
-
       char* new_data = nullptr;
-
       try
       {
         new_data = new char[new_cap];
@@ -54,7 +60,6 @@ int main()
     }
   }
 
-  bool input_error = !std::cin.eof();
   for (std::size_t i = sum; i > 0; --i)
   {
     std::cout << data[i - 1];
