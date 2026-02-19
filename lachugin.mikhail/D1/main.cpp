@@ -30,12 +30,13 @@ namespace lachugin
 
 int main()
 {
-  size_t n = 0;
-  char k = 0;
-
   char** arrs = nullptr;
   size_t* longs = nullptr;
 
+  size_t n = 0;
+
+  size_t k = 0;
+  size_t cap = 0;
   while (std::cin >> n)
   {
     char* arr = new char[n];
@@ -43,6 +44,20 @@ int main()
     {
       std::cin >> arr[i];
     }
+    k++;
 
+    if (cap <= k)
+    {
+      size_t capCoppy = cap;
+      try
+      {
+        lachugin::expendArr(&arrs, cap);
+        lachugin::expendLongs(&longs, capCoppy);
+      }
+      catch (const std::bad_alloc& )
+      {
+        return 2;
+      }
+    }
   }
 }
