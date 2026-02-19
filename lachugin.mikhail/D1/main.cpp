@@ -2,6 +2,15 @@
 
 namespace lachugin
 {
+  void freeArrs(char** arrs, size_t size)
+  {
+    for (size_t i = 0; i < size; ++i)
+    {
+      delete[] arrs[i];
+    }
+    delete[] arrs;
+  }
+
   void expendArr(char*** arrs, size_t& oldCap)
   {
     size_t newCap = (oldCap == 0) ? 2 : oldCap * 2;
@@ -18,12 +27,12 @@ namespace lachugin
   void expendLongs(size_t** longs, size_t& oldSize)
   {
     size_t newSize = (oldSize == 0) ? 2 : oldSize * 2;
-    size_t *newLengths = new size_t [newSize];
+    size_t *newLongs = new size_t [newSize];
     for (size_t i = 0; i < oldSize; ++i) {
-      newLengths[i] = (*longs)[i];
+      newLongs[i] = (*longs)[i];
     }
     delete[] *longs;
-    *longs = newLengths;
+    *longs = newLongs;
     oldSize = newSize;
   }
 }
@@ -37,6 +46,7 @@ int main()
 
   size_t k = 0;
   size_t cap = 0;
+  size_t start = 0;
   while (std::cin >> n)
   {
     char* arr = new char[n];
@@ -56,8 +66,29 @@ int main()
       }
       catch (const std::bad_alloc& )
       {
+        lachugin::freeArrs(arrs, k);
+        delete[] longs;
         return 2;
       }
     }
+    longs[start++] = n;
   }
+
+  if (std::cin.fail())
+  {
+    std::cerr << "Error: invalid input sequence\n";
+    lachugin::freeArrs(arrs, k);
+    delete[] longs;
+    return 1;
+  }
+
+  for (size_t i = k; i > 0; --i)
+  {
+    for (size_t j = longs[i]; j > 0; --j)
+    {
+      std::cout << arrs[i][j];
+    }
+  }
+  lachugin::freeArrs(arrs, k);
+  delete[] longs;
 }
