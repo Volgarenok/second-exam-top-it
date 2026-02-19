@@ -2,6 +2,18 @@
 
 namespace lachugin
 {
+  void printReversed(char** arrs, const size_t* longs, size_t k)
+  {
+    for (size_t i = k; i > 0; --i)
+    {
+      size_t idx = i - 1;
+      for (size_t j = longs[idx]; j > 0; --j)
+      {
+        std::cout << arrs[idx][j - 1];
+      }
+    }
+  }
+
   void freeArrs(char** arrs, size_t size)
   {
     for (size_t i = 0; i < size; ++i)
@@ -78,20 +90,15 @@ int main()
 
   if (!std::cin.eof() && !std::cin)
   {
+    lachugin::printReversed(arrs, longs, k);
     std::cerr << "Error: invalid input\n";
     lachugin::freeArrs(arrs, k);
     delete[] longs;
     return 1;
   }
 
-  for (size_t i = k; i > 0; --i)
-  {
-    size_t idx = i - 1;
-    for (size_t j = longs[idx]; j > 0; --j)
-    {
-      std::cout << arrs[idx][j - 1];
-    }
-  }
+  lachugin::printReversed(arrs, longs, k);
   lachugin::freeArrs(arrs, k);
   delete[] longs;
+  std::cout << "\n";
 }
