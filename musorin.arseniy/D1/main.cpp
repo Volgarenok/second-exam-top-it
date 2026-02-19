@@ -7,33 +7,29 @@ int main()
   const int readResult = readPairs(pairs, pairCount);
   if (readResult == 1)
   {
+    const int printResult = buildAndPrint(pairs, pairCount);
     std::cerr << "Error: failed to read pair element\n";
-    printLine("");
+    if (printResult == 2)
+    {
+      return 2;
+    }
     return 1;
   }
   if (readResult == 2)
   {
+    const int printResult = buildAndPrint(pairs, pairCount);
     std::cerr << "Error: memory allocation failed\n";
-    printLine("");
+    if (printResult == 2)
+    {
+      return 2;
+    }
     return 2;
   }
-  const size_t totalLength = calcTotalLength(pairs, pairCount);
-  char* sequence = nullptr;
-  try
+  const int printResult = buildAndPrint(pairs, pairCount);
+  if (printResult == 2)
   {
-    sequence = new char[totalLength + 1];
-  }
-  catch (...)
-  {
-    delete[] pairs;
     std::cerr << "Error: memory allocation failed\n";
-    printLine("");
     return 2;
   }
-  buildSequence(pairs, pairCount, sequence);
-  delete[] pairs;
-  reverseString(sequence, totalLength);
-  printLine(sequence);
-  delete[] sequence;
   return 0;
 }

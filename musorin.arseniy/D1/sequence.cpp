@@ -19,8 +19,6 @@ int musorin::readPairs(pair_t*& pairs, size_t& pairCount)
   {
     if (!(std::cin >> symbol))
     {
-      delete[] pairs;
-      pairs = nullptr;
       return 1;
     }
     if (pairCount == capacity)
@@ -33,8 +31,6 @@ int musorin::readPairs(pair_t*& pairs, size_t& pairCount)
       }
       catch (...)
       {
-        delete[] pairs;
-        pairs = nullptr;
         return 2;
       }
       for (size_t i = 0; i < pairCount; ++i)
@@ -51,8 +47,6 @@ int musorin::readPairs(pair_t*& pairs, size_t& pairCount)
   }
   if (!std::cin.eof())
   {
-    delete[] pairs;
-    pairs = nullptr;
     return 1;
   }
   return 0;
@@ -101,4 +95,25 @@ void musorin::reverseString(char* str, const size_t length)
 void musorin::printLine(const char* str)
 {
   std::cout << str << "\n";
+}
+int musorin::buildAndPrint(pair_t* pairs, const size_t pairCount)
+{
+  const size_t totalLength = calcTotalLength(pairs, pairCount);
+  char* sequence = nullptr;
+  try
+  {
+    sequence = new char[totalLength + 1];
+  }
+  catch (...)
+  {
+    delete[] pairs;
+    printLine("");
+    return 2;
+  }
+  buildSequence(pairs, pairCount, sequence);
+  delete[] pairs;
+  reverseString(sequence, totalLength);
+  printLine(sequence);
+  delete[] sequence;
+  return 0;
 }
