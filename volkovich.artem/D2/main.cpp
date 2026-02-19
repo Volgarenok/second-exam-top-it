@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
   } else {
     std::cout << '\n';
     return 0;
-
   }
 
   symbs_size[0] = 1;
