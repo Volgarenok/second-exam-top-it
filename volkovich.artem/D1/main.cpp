@@ -6,15 +6,18 @@ int main()
   char symb;
 
   size_t symbs_len = 0;
-  size_t* all_counts = new size_t[0];
-  size_t* tmp_counts = new size_t[0];
-  char* tmp_symbs = new char[0];
-  char* symbs = new char[0];
-  while (std::cin>>symb_count && std::cin>>symb) {
-    try {
-      tmp_symbs = new char[symbs_len+1];
-      tmp_counts = new size_t[symbs_len+1];
-      for (int i=0;i<symbs_len;i++) {
+  size_t *all_counts = nullptr;
+  size_t *tmp_counts = nullptr;
+  char *tmp_symbs = nullptr;
+  char *symbs = nullptr;
+  while (std::cin >> symb_count && std::cin >> symb)
+  {
+    try
+    {
+      tmp_symbs = new char[symbs_len + 1];
+      tmp_counts = new size_t[symbs_len + 1];
+      for (int i = 0; i < symbs_len; i++)
+      {
         tmp_symbs[i] = symbs[i];
         tmp_counts[i] = all_counts[i];
       }
@@ -24,7 +27,9 @@ int main()
       all_counts = tmp_counts;
       symbs[symbs_len] = symb;
       all_counts[symbs_len] = symb_count;
-    } catch (...) {
+    }
+    catch (...)
+    {
       delete[] symbs;
       delete[] all_counts;
       delete[] tmp_symbs;
@@ -33,15 +38,18 @@ int main()
     }
     symbs_len++;
   }
-  if (std::cin.bad()) {
-        return 1;
-    }
-  for (size_t i=0;i<symbs_len;i++) {
-    for(size_t j=0;j<all_counts[i];j++) {
-      std::cout<<symbs[i];
+  if (std::cin.bad())
+  {
+    return 1;
+  }
+  for (size_t i = 0; i < symbs_len; i++)
+  {
+    for (size_t j = 0; j < all_counts[i]; j++)
+    {
+      std::cout << symbs[i];
     }
   }
-  std::cout<<'\n';
+  std::cout << '\n';
   delete[] symbs;
   delete[] all_counts;
   return 0;
