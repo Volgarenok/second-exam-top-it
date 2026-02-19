@@ -14,11 +14,11 @@ namespace nabieva
 
 int main(int argc, char* argv[])
 {
-  if (argc > 1) {
+  if (argc > 2) {
     std::cerr << "Invalid arguments\n";
     return 1;
   }
-  if (std::strcmp(argv[1], "reverse")) {
+  if (argc == 2 && !(std::strcmp(argv[1], "reverse"))) {
     std::cerr << "Invalid arguments\n";
     return 1;
   }
@@ -41,10 +41,22 @@ int main(int argc, char* argv[])
       }
     }
     if (findSymb == false) {
-      pairs = nabieva::addNewPair(pairs, countPair, 1, symb);
-      countPair++;
+      try {
+        pairs = nabieva::addNewPair(pairs, countPair, 1, symb);
+        countPair++;
+      }
+      catch (const std::bad_alloc&) {
+        break;
+      }
     }
   }
+  if (argc == 2 && std::strcmp(argv[1], "reverse")) {
+    nabieva::reversePrintPairs(pairs, countPair);
+  }
+  else {
+    nabieva::printPairs(pairs, countPair);
+  }
+  delete[] pairs;
   return 0;
 }
 
@@ -63,5 +75,11 @@ void nabieva::printPairs(const nabieva::PairCountSymbol* pairs, size_t countPair
 {
   for (size_t i = 0; i < countPair; i++) {
     std::cout << pairs[i].count << " " << pairs[i].symbol << "\n";
+  }
+}
+void nabieva::reversePrintPairs(const nabieva::PairCountSymbol* pairs, size_t countPair)
+{
+  for (size_t i = 0; i < countPair; i++) {
+    std::cout << pairs[countPair - i - 1].count << " " << pairs[countPair - i - 1].symbol << "\n";
   }
 }
