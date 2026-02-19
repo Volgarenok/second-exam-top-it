@@ -77,5 +77,13 @@ int main()
   const int result = seq.read(std::cin);
   seq.printReversed(std::cout);
   seq.free();
-  return result;
+  if (result == 1) {
+    std::cerr << "Invalid input\n";
+    return 1;
+  }
+  if (result == 2) {
+    std::cerr << "Memory allocation failed\n";
+    return 2;
+  }
+  return 0;
 }
