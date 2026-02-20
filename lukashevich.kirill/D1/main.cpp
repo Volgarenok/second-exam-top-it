@@ -31,7 +31,7 @@ namespace lukashevich
 
       if (!(std::cin >> pair.symbol))
       {
-        delete [] pair_arr;
+        delete [] (*pair_arr);
         return false;
       }
 
